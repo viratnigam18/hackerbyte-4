@@ -3,5 +3,3 @@ uvicorn
 joblib
 scikit-learn
 numpy
-google-generativeai
-python-dotenv
