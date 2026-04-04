@@ -1,0 +1,4 @@
+*.joblib
+.env
+__pycache__/
+*.pyc
