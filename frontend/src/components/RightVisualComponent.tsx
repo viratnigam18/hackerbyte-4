@@ -34,15 +34,15 @@ const RightVisualComponent: React.FC = () => {
               style={{ pointerEvents: 'none' }}
               className="hidden lg:block w-48"
             >
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 rounded-2xl shadow-xl text-white transform -translate-y-8 animate-pulse">
+              <div className="bg-white/[0.04] backdrop-blur-md border border-white/[0.08] p-3 rounded-2xl shadow-xl text-white transform -translate-y-8 animate-pulse">
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-xs text-fintech-mint tracking-wider font-semibold uppercase">Heart Rate</span>
                   <div className="w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
                 </div>
                 <div className="text-2xl font-bold font-sans">
-                  120 <span className="text-sm font-normal text-gray-300">bpm</span>
+                  120 <span className="text-sm font-normal text-white/40">bpm</span>
                 </div>
-                <div className="mt-2 h-6 border-b border-t border-white/10 flex items-center justify-center opacity-80 overflow-hidden">
+                <div className="mt-2 h-6 border-b border-t border-white/[0.08] flex items-center justify-center opacity-80 overflow-hidden">
                   {/* CSS Animated ECG Line Mock */}
                   <svg className="w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
                     <polyline 

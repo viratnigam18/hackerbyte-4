@@ -28,9 +28,9 @@ const HospitalCards: React.FC = () => {
           <div className="w-7 h-7 rounded-lg bg-ll-cyan/10 flex items-center justify-center">
             <MapPin size={14} className="text-ll-cyan" />
           </div>
-          <h3 className="text-xs font-bold tracking-widest text-white/40 uppercase">Nearby Hospitals</h3>
+          <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase">Nearby Hospitals</h3>
         </div>
-        <span className="text-[10px] text-white/25 font-medium">{hospitals.length} found</span>
+        <span className="text-[10px] text-white/50 font-medium">{hospitals.length} found</span>
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-2 pr-1">
@@ -41,8 +41,8 @@ const HospitalCards: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 + i * 0.1 }}
             className="
-              group p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]
-              hover:bg-white/[0.05] hover:border-white/[0.08]
+              group p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]
+              hover:bg-white/[0.04] hover:border-white/[0.08]
               transition-all duration-200
             "
           >
@@ -50,9 +50,9 @@ const HospitalCards: React.FC = () => {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="w-1.5 h-1.5 rounded-full" style={{ background: h.color }} />
-                  <h4 className="text-sm font-semibold text-white/85">{h.name}</h4>
+                  <h4 className="text-sm font-semibold text-white/50">{h.name}</h4>
                 </div>
-                <p className="text-[10px] text-white/30 font-medium pl-3.5">{h.specialty}</p>
+                <p className="text-[10px] text-white/50 font-medium pl-3.5">{h.specialty}</p>
               </div>
               <div className="text-right">
                 <div className="flex items-center gap-1 text-ll-amber">
@@ -64,11 +64,11 @@ const HospitalCards: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1 text-[10px] text-white/30">
+                <span className="flex items-center gap-1 text-[10px] text-white/50">
                   <MapPin size={10} />
                   {h.distance}
                 </span>
-                <span className="flex items-center gap-1 text-[10px] text-white/30">
+                <span className="flex items-center gap-1 text-[10px] text-white/50">
                   <Clock size={10} />
                   {h.eta}
                 </span>

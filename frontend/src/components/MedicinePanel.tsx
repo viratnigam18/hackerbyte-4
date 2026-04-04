@@ -10,7 +10,7 @@ const MedicinePanel: React.FC = () => {
         <div className="w-7 h-7 rounded-lg bg-ll-teal/10 flex items-center justify-center">
           <Pill size={14} className="text-ll-teal" />
         </div>
-        <h3 className="text-xs font-bold tracking-widest text-white/40 uppercase">Medicine & Remedies</h3>
+        <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase">Medicine & Remedies</h3>
       </div>
 
       {/* Medicines */}
@@ -19,9 +19,9 @@ const MedicinePanel: React.FC = () => {
           <Pill size={12} className="text-ll-cyan" />
           <span className="text-[10px] font-bold text-ll-cyan tracking-wide">SUGGESTED MEDICINES</span>
         </div>
-        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
-          <p className="text-xs text-white/30 italic">Awaiting symptom analysis...</p>
-          <p className="text-[10px] text-white/15 mt-1">Medicines will appear after AI analysis</p>
+        <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3">
+          <p className="text-xs text-white/50 italic">Awaiting symptom analysis...</p>
+          <p className="text-[10px] text-white/50 mt-1">Medicines will appear after AI analysis</p>
         </div>
       </div>
 
@@ -31,9 +31,9 @@ const MedicinePanel: React.FC = () => {
           <Leaf size={12} className="text-ll-emerald" />
           <span className="text-[10px] font-bold text-ll-emerald tracking-wide">HOME REMEDIES</span>
         </div>
-        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
-          <p className="text-xs text-white/30 italic">Awaiting symptom analysis...</p>
-          <p className="text-[10px] text-white/15 mt-1">Natural remedies will be suggested</p>
+        <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3">
+          <p className="text-xs text-white/50 italic">Awaiting symptom analysis...</p>
+          <p className="text-[10px] text-white/50 mt-1">Natural remedies will be suggested</p>
         </div>
       </div>
 

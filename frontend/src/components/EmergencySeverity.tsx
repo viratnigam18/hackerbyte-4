@@ -13,7 +13,7 @@ const EmergencySeverity: React.FC = () => {
       {/* Header */}
       <div className="absolute top-4 left-5 flex items-center gap-2">
         <AlertTriangle size={14} className="text-ll-amber" />
-        <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">Emergency Severity</span>
+        <span className="text-[10px] font-bold tracking-widest text-white/50 uppercase">Emergency Severity</span>
       </div>
 
       {/* Pulse Rings */}
@@ -45,7 +45,7 @@ const EmergencySeverity: React.FC = () => {
           }}
         >
           <span className="text-lg font-bold text-white tracking-wide">{severity}</span>
-          <span className="text-[9px] text-white/40 font-bold tracking-widest uppercase">Level</span>
+          <span className="text-[9px] text-white/50 font-bold tracking-widest uppercase">Level</span>
         </motion.div>
       </div>
 
