@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Navigation2, Filter, Star, DollarSign, Clock } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import React, { useState, useEffect } from 'react';
+import { Navigation2, Filter, Star, Clock, DollarSign } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import GlassCard from './GlassCard';
@@ -18,48 +18,72 @@ const createCustomIcon = (color: string) => {
   });
 };
 
+// Component to handle map center updates
+const RecenterMap: React.FC<{ center: [number, number] }> = ({ center }) => {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center, map.getZoom());
+  }, [center, map]);
+  return null;
+};
 
-// Hardcoded location (Delhi approx)
-const USER_LOCATION: [number, number] = [28.5450, 77.1950];
 
-const hospitalsData = [
-  { name: 'CityMD Emergency', specialty: 'Emergency Care', category: 'Nearest', lat: 28.5400, lng: 77.1850, color: '#ff4d4d', stat: '0.8 km' },
-  { name: 'Fortis Hospital', specialty: 'Cardiology', category: 'Highest Rated', lat: 28.5550, lng: 77.2050, color: '#4ade80', stat: '★ 4.8' },
-  { name: 'Apollo Clinic', specialty: 'General Medicine', category: 'Cheapest', lat: 28.5300, lng: 77.1750, color: '#a78bfa', stat: '$' },
-  { name: 'AIIMS', specialty: 'Multi-specialty', category: 'All', lat: 28.5700, lng: 77.2100, color: '#facc15', stat: '5.2 km' },
-];
+import { Hospital } from './AnalysisDashboard';
 
-const MapSection: React.FC = () => {
+interface MapSectionProps {
+  userLocation: [number, number];
+  hospitals: Hospital[];
+  radius: number;
+  isLocating: boolean;
+  isExpanding: boolean;
+}
+
+const MapSection: React.FC<MapSectionProps> = ({ userLocation, hospitals, radius, isLocating, isExpanding }) => {
   const [filter, setFilter] = useState('All');
 
-  const filteredHospitals = filter === 'All' 
-    ? hospitalsData 
-    : hospitalsData.filter(h => h.category === filter);
+  const finalHospitals = (() => {
+    if (filter === 'All') return hospitals;
+    if (filter === 'Nearest') {
+      const sorted = [...hospitals].sort((a, b) => (a.distance || 0) - (b.distance || 0));
+      return sorted.length > 0 ? [sorted[0]] : []; // Show only the absolute closest
+    }
+    if (filter === 'Highest Rated') {
+      return hospitals.filter(h => h.rating >= 4.7); // Best hospitals
+    }
+    if (filter === 'Cheapest') {
+      // Return a specific hospital to simulate 'Cheapest'
+      const sorted = [...hospitals].sort((a, b) => a.name.localeCompare(b.name));
+      return sorted.length > 0 ? [sorted[0]] : []; 
+    }
+    return hospitals;
+  })();
 
   return (
     <GlassCard className="h-full flex flex-col relative overflow-hidden p-0 min-h-[350px]" delay={0.45}>
       {/* Interactive Map Area */}
       <div className="flex-1 relative rounded-t-xl overflow-hidden" style={{ minHeight: '260px', zIndex: 1 }}>
         <MapContainer 
-          center={USER_LOCATION} 
-          zoom={13} 
+          center={userLocation} 
+          zoom={radius > 1000 ? 5 : radius > 100 ? 8 : 13} 
           style={{ height: '100%', width: '100%' }} 
           zoomControl={false}
           attributionControl={false}
         >
+          <RecenterMap center={userLocation} />
+          
           {/* Dark map tiles suitable for the dashboard's design */}
           <TileLayer
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
 
-          {/* User Location Area */}
+          {/* User Location Area (The Search Zone) */}
           <Circle 
-            center={USER_LOCATION} 
-            radius={2000} 
-            pathOptions={{ color: '#00f5d4', fillColor: '#00f5d4', fillOpacity: 0.1, weight: 1 }} 
+            center={userLocation} 
+            radius={radius * 1000} 
+            pathOptions={{ color: '#00f5d4', fillColor: '#00f5d4', fillOpacity: 0.05, weight: 1 }} 
           />
           <Marker 
-            position={USER_LOCATION} 
+            position={userLocation} 
             icon={L.divIcon({
               className: 'user-pulse',
               html: `<div class="w-4 h-4 rounded-full bg-ll-cyan relative"><div class="absolute inset-0 rounded-full bg-ll-cyan animate-ping-slow"></div></div>`,
@@ -72,7 +96,7 @@ const MapSection: React.FC = () => {
           </Marker>
 
           {/* Hospital Markers */}
-          {filteredHospitals.map(h => (
+          {finalHospitals.map(h => (
             <Marker key={h.name} position={[h.lat, h.lng]} icon={createCustomIcon(h.color)}>
               <Popup className="custom-popup">
                 <div className="p-1 min-w-[120px]">
@@ -80,10 +104,13 @@ const MapSection: React.FC = () => {
                     <span className="w-2 h-2 rounded-full" style={{ background: h.color }}></span>
                     <strong className="text-sm text-gray-900 leading-tight">{h.name}</strong>
                   </div>
-                  <p className="text-xs text-gray-600 mb-2">{h.specialty}</p>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-800 border border-gray-200">
-                    {h.category}: {h.stat}
-                  </span>
+                  <p className="text-xs text-gray-600 mb-1">{h.specialty}</p>
+                  <div className="flex items-center justify-between mt-1 pt-1 border-t border-gray-100">
+                    <span className="text-[10px] font-bold text-gray-400">{h.distance?.toFixed(1)} km</span>
+                    <span className="text-[10px] font-bold text-ll-yellow flex items-center gap-0.5">
+                      <Star size={8} fill="currentColor" /> {h.rating}
+                    </span>
+                  </div>
                 </div>
               </Popup>
             </Marker>
@@ -92,8 +119,10 @@ const MapSection: React.FC = () => {
 
         {/* Floating Label */}
         <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 z-[400] pointer-events-none">
-          <Navigation2 size={12} className="text-ll-cyan" />
-          <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">Live Map</span>
+          <Navigation2 size={12} className={isLocating || isExpanding ? "text-ll-cyan animate-pulse" : "text-ll-cyan"} />
+          <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">
+            {isLocating ? "Locating..." : isExpanding ? `SCALING: ${radius}KM` : `ZONE: ${radius}KM`}
+          </span>
         </div>
       </div>
 
@@ -119,6 +148,9 @@ const MapSection: React.FC = () => {
             {f.label}
           </button>
         ))}
+        {hospitals.length === 0 && !isLocating && (
+          <span className="text-[10px] text-red-400 font-bold ml-auto animate-pulse">Expanding search...</span>
+        )}
       </div>
 
       <style>{`
@@ -131,4 +163,5 @@ const MapSection: React.FC = () => {
 };
 
 export default MapSection;
+
 

@@ -13,6 +13,35 @@ interface AnalysisDashboardProps {
   onBack: () => void;
 }
 
+export interface Hospital {
+  name: string;
+  specialty: string;
+  lat: number;
+  lng: number;
+  color: string;
+  rating: number;
+  eta: string;
+  distance?: number;
+}
+
+const generateHospitals = (lat: number, lng: number): Hospital[] => [
+  { name: 'CityMD Emergency', specialty: 'Emergency Care', lat: lat + 0.005, lng: lng - 0.005, color: '#ff4d4d', rating: 4.5, eta: '3 min' },
+  { name: 'Fortis Hospital', specialty: 'Cardiology', lat: lat - 0.008, lng: lng + 0.008, color: '#4ade80', rating: 4.8, eta: '8 min' },
+  { name: 'Apollo Clinic', specialty: 'General Medicine', lat: lat + 0.012, lng: lng + 0.005, color: '#a78bfa', rating: 4.3, eta: '12 min' },
+  { name: 'AIIMS', specialty: 'Multi-specialty', lat: lat - 0.015, lng: lng - 0.010, color: '#facc15', rating: 4.9, eta: '18 min' },
+];
+
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; // km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
 export interface AnalysisData {
   response: string;
   confidence: number;
@@ -22,6 +51,13 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [analysis, setAnalysis] = useState<AnalysisData | null>(null);
+
+  // GPS and Search States
+  const [userLocation, setUserLocation] = useState<[number, number]>([28.5450, 77.1950]);
+  const [activeRadius, setActiveRadius] = useState(5);
+  const [isGpsLoading, setIsGpsLoading] = useState(true);
+  const [isExpanding, setIsExpanding] = useState(false);
+  const [nearbyHospitals, setNearbyHospitals] = useState<Hospital[]>([]);
 
   useEffect(() => {
     const fetchPrediction = async () => {
@@ -49,6 +85,59 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
     
     if (symptoms) fetchPrediction();
   }, [symptoms]);
+
+  // Geolocation Effect
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation([position.coords.latitude, position.coords.longitude]);
+          setIsGpsLoading(false);
+        },
+        (error) => {
+          console.error("GPS Error:", error);
+          setIsGpsLoading(false);
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    } else {
+      setIsGpsLoading(false);
+    }
+  }, []);
+
+  // Adaptive Search Logic (Expanding Zones) - Animated Stepping
+  useEffect(() => {
+    if (isGpsLoading) return;
+
+    const radii = [5, 10, 25, 50, 100, 500, 1000, 5000];
+    const currentIndex = radii.indexOf(activeRadius);
+    
+    // Calculate distances to all hospitals
+    const hospitalsWithDist = generateHospitals(userLocation[0], userLocation[1]).map(h => ({
+      ...h,
+      distance: calculateDistance(userLocation[0], userLocation[1], h.lat, h.lng)
+    })).sort((a, b) => a.distance! - b.distance!);
+
+    // Check if any are within current radius
+    const found = hospitalsWithDist.filter(h => h.distance! <= activeRadius);
+
+    if (found.length > 0) {
+      setNearbyHospitals(found);
+      setIsExpanding(false);
+    } else if (currentIndex < radii.length - 1) {
+      // Not found, sweep faster to next zone
+      setIsExpanding(true);
+      const timer = setTimeout(() => {
+        setActiveRadius(radii[currentIndex + 1]);
+      }, 200); // Fast 200ms sweep
+      return () => clearTimeout(timer);
+    } else {
+      // Safety Fallback: If we hit 5000km and still nothing (e.g. user is in another continent)
+      // Just show the nearest hospitals anyway so the UI isn't empty
+      setNearbyHospitals(hospitalsWithDist);
+      setIsExpanding(false);
+    }
+  }, [userLocation, isGpsLoading, activeRadius]);
 
   return (
     <div className="w-full h-full flex flex-col overflow-hidden">
@@ -102,7 +191,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
 
             {/* RIGHT: Nearby Hospitals — 4 cols, full height */}
             <div className="col-span-12 md:col-span-4">
-              <NearbyHospitalsPanel />
+              <NearbyHospitalsPanel hospitals={nearbyHospitals} isSearching={isExpanding} />
             </div>
           </div>
 
@@ -115,7 +204,13 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
 
             {/* RIGHT: Map — 6 cols */}
             <div className="col-span-12 md:col-span-6">
-              <MapSection />
+              <MapSection 
+                userLocation={userLocation} 
+                hospitals={nearbyHospitals} 
+                radius={activeRadius}
+                isLocating={isGpsLoading} 
+                isExpanding={isExpanding}
+              />
             </div>
           </div>
 
