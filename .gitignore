@@ -2,3 +2,10 @@
 .env
 __pycache__/
 *.pyc
+
+
+
+mental_model/models/
+__pycache__/
+*.pyc
+.env
