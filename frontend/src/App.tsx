@@ -3,12 +3,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LoginForm from './components/LoginForm';
 import RightVisualComponent from './components/RightVisualComponent';
 import HeroDNA from './components/HeroDNA';
+import CustomCursor from './components/CustomCursor';
+import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
 
+  if (isAuthenticated) {
+    return (
+      <>
+        <CustomCursor />
+        <Dashboard onLogout={() => setIsAuthenticated(false)} />
+      </>
+    );
+  }
+
   return (
-    <AnimatePresence mode="wait">
+    <>
+      <CustomCursor />
+      <AnimatePresence mode="wait">
       {showLanding ? (
         <motion.div
           key="hero"
@@ -35,7 +49,7 @@ const App: React.FC = () => {
             transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
             className="w-full lg:w-[45%] h-full relative z-10 shadow-2xl shadow-black/10"
           >
-            <LoginForm onLogin={() => alert('Logged In!')} />
+            <LoginForm onLogin={() => setIsAuthenticated(true)} />
           </motion.div>
 
           {/* Right Section - 3D Visual */}
@@ -50,6 +64,7 @@ const App: React.FC = () => {
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   );
 };
 
