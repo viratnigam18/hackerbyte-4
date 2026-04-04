@@ -2,7 +2,7 @@ import React from 'react';
 import { User, Droplets, Calendar, Activity, AlertCircle, HeartPulse, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const profileData = {
+export const profileData = {
   name: 'Aditya',
   age: 22,
   bloodGroup: 'O+',

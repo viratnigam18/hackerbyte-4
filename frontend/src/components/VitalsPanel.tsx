@@ -143,8 +143,8 @@ const VitalsPanel: React.FC = () => {
     try {
       setIsConnecting(true);
       const device = await nav.bluetooth.requestDevice({
-        filters: [{ services: ['heart_rate'] }],
-        optionalServices: ['battery_service']
+        acceptAllDevices: true,
+        optionalServices: ['heart_rate', 'battery_service']
       });
       
       const server = await device.gatt.connect();
