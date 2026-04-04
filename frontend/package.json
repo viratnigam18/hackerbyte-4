@@ -13,7 +13,6 @@
     "@react-three/drei": "^9.106.0",
     "@react-three/fiber": "^8.16.8",
     "@react-three/postprocessing": "^2.16.2",
-    "@types/leaflet": "^1.9.21",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
     "leaflet": "^1.9.4",
@@ -27,6 +26,7 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.21",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/three": "^0.165.0",

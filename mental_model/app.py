@@ -4,8 +4,12 @@ import torch
 from typing import List
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import httpx
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+WEBHOOK_URL = "https://n8n-production-abc123.up.railway.app/webhook/api-llm"
+SOS_WEBHOOK_URL = "https://n8n-production-abc123.up.railway.app/webhook/hackathon-sos"
 
 app = FastAPI(title="Mental Health Assistant API")
 
@@ -145,6 +149,29 @@ def load_model():
         print(f"Label encoder not found at {LABEL_ENCODER_PATH}")
 
 
+async def get_hybrid_llm_response(user_message: str, predicted_status: str, default_text: str) -> str:
+    """Calls the external LLM webhook for a personalized response with a local fallback."""
+    try:
+        async with httpx.AsyncClient() as client:
+            # We send both the user message and the category the AI detected
+            payload = {
+                "message": user_message,
+                "category": predicted_status,
+                "context": "Act as a highly empathetic mental health assistant."
+            }
+            response = await client.post(WEBHOOK_URL, json=payload, timeout=10.0)
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Assuming n8n returns the text in an 'output' or 'response' field
+                return data.get("output") or data.get("response") or default_text
+            
+            return default_text
+    except Exception as e:
+        print(f"Hybrid LLM Error (Falling back to local): {e}")
+        return default_text
+
+
 class ChatRequest(BaseModel):
     message: str
 
@@ -167,6 +194,7 @@ async def chat_endpoint(req: ChatRequest):
     if tokenizer is None or model is None or label_encoder is None:
         raise HTTPException(status_code=503, detail="Model is not loaded.")
     
+    # 1. Local Classification (The "Diagnosis" layer)
     inputs = tokenizer(message, return_tensors="pt", truncation=True, padding=True)
     with torch.no_grad():
         outputs = model(**inputs)
@@ -174,17 +202,39 @@ async def chat_endpoint(req: ChatRequest):
     pred_idx = torch.argmax(probs).item()
     confidence = probs[0][pred_idx].item()
     predicted_label = label_encoder.inverse_transform([pred_idx])[0]
+    
+    # 2. Get static fallback data
     response_data = SUPPORTIVE_RESPONSES.get(predicted_label, DEFAULT_RESPONSE)
+    
+    # 3. Request dynamic empathy from LLM (The "Conversational" layer)
+    llm_message = await get_hybrid_llm_response(message, predicted_label, response_data["message"])
 
     return ChatResponse(
         user_message=message,
         predicted_status=predicted_label,
         confidence=confidence,
-        response_message=response_data["message"],
+        response_message=llm_message,
         tips=response_data["tips"],
         severity=response_data["severity"],
         color=response_data["color"],
     )
+
+
+@app.post("/sos")
+async def sos_proxy_endpoint(payload: dict):
+    """Proxies the SOS trigger from frontend to n8n to bypass CORS issues."""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(SOS_WEBHOOK_URL, json=payload, timeout=10.0)
+            if response.status_code == 200:
+                print(f"SOS Signal forwarded to n8n: {response.status_code}")
+                return {"status": "success", "detail": "SOS Signal Forwarded"}
+            else:
+                print(f"n8n SOS error: {response.status_code} - {response.text}")
+                return {"status": "error", "detail": f"n8n Error {response.status_code}"}
+    except Exception as e:
+        print(f"SOS Proxy Error: {e}")
+        return {"status": "error", "detail": str(e)}
 
 
 @app.get("/")

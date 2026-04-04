@@ -1,0 +1,58 @@
+[
+  {
+    "user_message": "I am so happy today",
+    "predicted_status": "Normal",
+    "confidence": 0.803019642829895,
+    "response_message": "You seem to be in a good mental space right now. That's great!",
+    "tips": [
+      "Keep up with activities that bring you joy and relaxation.",
+      "Maintain healthy social connections and routines.",
+      "Practice gratitude - write down 3 things you're thankful for each day.",
+      "Regular exercise and good sleep hygiene go a long way."
+    ],
+    "severity": "low",
+    "color": "#10B981"
+  },
+  {
+    "user_message": "I want to end my life",
+    "predicted_status": "Suicidal",
+    "confidence": 0.6985574960708618,
+    "response_message": "I'm really concerned about what you've shared. You matter, and help is available right now.",
+    "tips": [
+      "Please call a crisis helpline immediately: iCall (9152987821) or Vandrevala Foundation (1860-2662-345)",
+      "If you're in immediate danger, please call emergency services (112).",
+      "Reach out to someone you trust right now - you don't have to face this alone.",
+      "Text 'HELLO' to 741741 (Crisis Text Line) if you prefer texting."
+    ],
+    "severity": "critical",
+    "color": "#DC2626"
+  },
+  {
+    "user_message": "I am very anxious about tomorrow",
+    "predicted_status": "Normal",
+    "confidence": 0.5953155159950256,
+    "response_message": "You seem to be in a good mental space right now. That's great!",
+    "tips": [
+      "Keep up with activities that bring you joy and relaxation.",
+      "Maintain healthy social connections and routines.",
+      "Practice gratitude - write down 3 things you're thankful for each day.",
+      "Regular exercise and good sleep hygiene go a long way."
+    ],
+    "severity": "low",
+    "color": "#10B981"
+  },
+  {
+    "user_message": "I feel so depressed and cannot get out of bed",
+    "predicted_status": "Depression",
+    "confidence": 0.3320159614086151,
+    "response_message": "I hear you, and what you're feeling matters. Depression can feel overwhelming, but help is available.",
+    "tips": [
+      "Reach out to someone you trust - a friend, family member, or counselor.",
+      "Try to maintain small daily routines, even something as simple as a short walk.",
+      "Consider speaking with a mental health professional who can guide you.",
+      "Remember: asking for help is a sign of strength, not weakness."
+    ],
+    "severity": "high",
+    "color": "#EF4444"
+  }
+]

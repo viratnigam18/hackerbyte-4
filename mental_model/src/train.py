@@ -9,8 +9,8 @@ from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from preprocess import load_mental_data
 
-MODEL_NAME = "distilbert-base-uncased"
-FAST_HACKATHON_MODE = True # Set to False for final full training
+MODEL_NAME = "google/bert_uncased_L-2_H-128_A-2"
+FAST_HACKATHON_MODE = False # Now using full dataset for accuracy!
 
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels):
@@ -66,10 +66,8 @@ def train():
     # Load dataset
     df = load_mental_data(data_path)
 
-    if FAST_HACKATHON_MODE:
-        print("\n⚡ FAST HACKATHON MODE ENABLED: Using a subset of data so it trains in minutes instead of hours on CPU.")
-        # Subsample to 5000 samples
-        df = df.sample(n=min(5000, len(df)), random_state=42).reset_index(drop=True)
+    print(f"\n⚡ Training on FULL dataset: {len(df)} samples...")
+    # Using the whole dataset now since BERT-Tiny is efficient on CPU
 
     # Encode labels
     le = LabelEncoder()
@@ -95,7 +93,7 @@ def train():
     class_weights_tensor = torch.tensor(weights, dtype=torch.float)
 
     # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, use_fast=False)
 
     # Tokenize
     train_encodings = tokenizer(texts_train, truncation=True, padding=True, max_length=128)
@@ -111,23 +109,19 @@ def train():
         num_labels=len(unique_classes)
     )
 
-    if FAST_HACKATHON_MODE:
-        # Freeze the transformer layers so we only train the classification head
-        print("⚡ Freezing base transformer layers for blazing fast CPU training...")
-        for param in model.base_model.parameters():
-            param.requires_grad = False
+    print("⚡ Training entire BERT-Tiny model architecture...")
 
     # Optimized Training config
     training_args = TrainingArguments(
         output_dir=models_dir,
-        num_train_epochs=3,
-        per_device_train_batch_size=16,
-        per_device_eval_batch_size=16,
+        num_train_epochs=5,
+        per_device_train_batch_size=32,
+        per_device_eval_batch_size=32,
         eval_strategy="epoch",
         save_strategy="epoch",
         logging_dir=logs_dir,
-        logging_steps=50,
-        learning_rate=2e-4 if FAST_HACKATHON_MODE else 2e-5,
+        logging_steps=100,
+        learning_rate=5e-5,
         weight_decay=0.01,
         fp16=torch.cuda.is_available(),
         load_best_model_at_end=True,
