@@ -2,15 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Navigation, Phone, Star, Clock } from 'lucide-react';
 import GlassCard from './GlassCard';
+import { Hospital } from './AnalysisDashboard';
 
-const hospitals = [
-  { name: 'CityMD Emergency', specialty: 'Emergency Care', distance: '0.8 km', rating: 4.5, eta: '3 min', color: '#ff4d4d' },
-  { name: 'Fortis Hospital', specialty: 'Cardiology', distance: '2.1 km', rating: 4.8, eta: '8 min', color: '#4ade80' },
-  { name: 'Apollo Clinic', specialty: 'General Medicine', distance: '3.5 km', rating: 4.3, eta: '12 min', color: '#a78bfa' },
-  { name: 'AIIMS', specialty: 'Multi-specialty', distance: '5.2 km', rating: 4.9, eta: '18 min', color: '#facc15' },
-];
+interface NearbyHospitalsPanelProps {
+  hospitals: Hospital[];
+  isSearching: boolean;
+}
 
-const NearbyHospitalsPanel: React.FC = () => {
+const NearbyHospitalsPanel: React.FC<NearbyHospitalsPanelProps> = ({ hospitals, isSearching }) => {
   return (
     <GlassCard className="h-full flex flex-col" delay={0.25}>
       <div className="flex items-center justify-between mb-4">
@@ -20,13 +19,21 @@ const NearbyHospitalsPanel: React.FC = () => {
           </div>
           <div>
             <h3 className="text-sm font-bold text-white">Nearby Hospitals</h3>
-            <p className="text-[10px] text-white/50">Based on your location</p>
+            <p className="text-[10px] text-white/50">{isSearching ? 'Expanding search zone...' : 'Based on your location'}</p>
           </div>
         </div>
-        <span className="text-[10px] text-white/50 font-medium bg-white/[0.04] px-2 py-1 rounded-lg border border-white/[0.08]">
-          {hospitals.length} found
+        <span className="text-[10px] text-white/50 font-medium bg-white/[0.04] px-2 py-1 rounded-lg border border-white/[0.08] flex items-center gap-2">
+          {isSearching && <span className="w-1 h-1 rounded-full bg-ll-cyan animate-ping" />}
+          {isSearching ? 'Searching...' : `${hospitals.length} found`}
         </span>
       </div>
+
+      {isSearching && hospitals.length === 0 && (
+        <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-3">
+          <div className="w-12 h-12 rounded-full border-2 border-ll-cyan/20 border-t-ll-cyan animate-spin" />
+          <p className="text-xs text-white/40 font-medium animate-pulse">Scanning global healthcare network...</p>
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto space-y-2 pr-1">
         {hospitals.map((h, i) => (
@@ -55,11 +62,11 @@ const NearbyHospitalsPanel: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 text-[10px] text-white/50">
-                <span className="flex items-center gap-1"><MapPin size={9} />{h.distance}</span>
-                <span className="flex items-center gap-1"><Clock size={9} />{h.eta}</span>
-              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 text-[10px] text-white/50">
+                  <span className="flex items-center gap-1"><MapPin size={9} />{h.distance?.toFixed(1)} km</span>
+                  <span className="flex items-center gap-1"><Clock size={9} />{h.eta}</span>
+                </div>
               <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 <button className="w-6 h-6 rounded-lg bg-ll-cyan/[0.08] flex items-center justify-center text-ll-cyan hover:bg-ll-cyan/15 transition-colors">
                   <Phone size={10} />

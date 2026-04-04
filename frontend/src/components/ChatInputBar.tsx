@@ -9,7 +9,40 @@ interface ChatInputBarProps {
 
 const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false }) => {
   const [input, setInput] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+      const response = await fetch('http://localhost:8002/analyze', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.status === 'success') {
+        const generatedText = `[Image Analysis] ${data.problem}. ${data.details}`;
+        setInput(generatedText);
+        // Automatically submit the analysis
+        onSubmit(generatedText);
+        setInput('');
+      }
+    } catch (error) {
+      console.error('Image analysis failed:', error);
+      alert('Failed to analyze image. Ensure the image-to-text service is running.');
+    } finally {
+      setIsUploading(false);
+      // Reset input value so same file can be selected again
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
 
   const handleSubmit = () => {
     if (!input.trim() || isLoading) return;
@@ -82,20 +115,36 @@ const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false
             <Mic size={16} />
           </motion.button>
 
-          {/* File Upload */}
+          {/* File Upload Hidden Input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            accept="image/*"
+            style={{ display: 'none' }}
+          />
+
+          {/* File Upload Button */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
             className="
               w-9 h-9 rounded-xl
               bg-white/5 border border-white/10
               flex items-center justify-center
-              text-white/40 hover:text-ll-purple hover:border-ll-purple/20 hover:bg-ll-purple/[0.05]
+              text-white/30 hover:text-ll-purple hover:border-ll-purple/20 hover:bg-ll-purple/[0.05]
+              disabled:opacity-50 disabled:cursor-not-allowed
               transition-all duration-200
             "
             title="Upload medical report"
           >
-            <Paperclip size={16} />
+            {isUploading ? (
+               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+               <Paperclip size={16} />
+            )}
           </motion.button>
 
           {/* Send */}

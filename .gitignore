@@ -1,13 +1,36 @@
-*.joblib
-.env
+# Python
 __pycache__/
 *.pyc
+*.joblib
+*.pt
+*.h5
 
+# Env
+.env
 
+# Node
+node_modules/
+dist/
+.vite/
 
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+node_modules/
+.vite/
+dist/
+.env
+
+<<<<<<< HEAD
 mental_model/models/
 __pycache__/
 *.pyc
 .env
 node_modules
-node_modules
+
+=======
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91

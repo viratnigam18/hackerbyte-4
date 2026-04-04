@@ -10,17 +10,25 @@ import AntiStressGame from './AntiStressGame';
 =======
 import ProfileView from './ProfileView';
 import HistoryView from './HistoryView';
+<<<<<<< HEAD
 >>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
+=======
+import VitalsPanel from './VitalsPanel';
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 type Screen = 'landing' | 'analysis' | 'mental-health' | 'anti-stress';
 =======
 type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile';
 >>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
+=======
+type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile' | 'watch';
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
 
 const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const [screen, setScreen] = useState<Screen>('landing');
@@ -44,7 +52,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
 =======
     else if (page === 'history') setScreen('history');
     else if (page === 'profile') setScreen('profile');
+<<<<<<< HEAD
 >>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
+=======
+    else if (page === 'watch') setScreen('watch');
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
     else setScreen('landing');
   };
 
@@ -116,6 +128,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
           )}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
           {screen === 'anti-stress' && (
             <motion.div
               key="anti-stress"
@@ -127,6 +140,36 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
             >
               <AntiStressGame onBack={() => setScreen('landing')} />
 =======
+=======
+          {screen === 'watch' && (
+            <motion.div
+              key="watch"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 40 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full flex flex-col"
+            >
+              <div className="px-6 py-3 border-b border-white/[0.06] bg-[rgba(8,32,20,0.6)] backdrop-blur-xl">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setScreen('landing')}
+                    className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-white/30 hover:text-ll-cyan transition-colors"
+                  >
+                    ←
+                  </button>
+                  <span className="text-sm font-bold text-white">Smartwatch Connection Center</span>
+                </div>
+              </div>
+              <div className="flex-1 overflow-auto p-4 md:p-12 flex justify-center items-center pt-8 pb-32">
+                  <div className="w-full max-w-5xl min-h-[400px]">
+                      <VitalsPanel />
+                  </div>
+              </div>
+            </motion.div>
+          )}
+
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
           {screen === 'history' && (
             <motion.div
               key="history"

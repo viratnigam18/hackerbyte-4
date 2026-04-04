@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useSpring } from 'framer-motion';
 
-const CustomCursor: React.FC = () => {
+interface CustomCursorProps {
+  variant?: 'default' | 'dashboard';
+}
+
+const CustomCursor: React.FC<CustomCursorProps> = ({ variant = 'default' }) => {
   const [isHovering, setIsHovering] = useState(false);
 
   // Springs for the liquid trailing effect
@@ -52,6 +56,18 @@ const CustomCursor: React.FC = () => {
     };
   }, [cursorX1, cursorY1, cursorX2, cursorY2, cursorX3, cursorY3]);
 
+  const colors = variant === 'dashboard' 
+    ? {
+        main: 'bg-green-700',
+        trail1: 'bg-green-500',
+        trail2: 'bg-green-400'
+      }
+    : {
+        main: 'bg-fintech-navy',
+        trail1: 'bg-blue-500',
+        trail2: 'bg-violet-500'
+      };
+
   return (
     <>
       {/* SVG gooey filter definition */}
@@ -69,7 +85,7 @@ const CustomCursor: React.FC = () => {
       >
         {/* Main Blob */}
         <motion.div
-          className="absolute top-0 left-0 bg-fintech-navy rounded-full"
+          className={`absolute top-0 left-0 ${colors.main} rounded-full`}
           style={{
             x: cursorX1,
             y: cursorY1,
@@ -81,7 +97,7 @@ const CustomCursor: React.FC = () => {
         />
         {/* Trailing Blob 1 */}
         <motion.div
-          className="absolute top-0 left-0 bg-blue-500 rounded-full"
+          className={`absolute top-0 left-0 ${colors.trail1} rounded-full`}
           style={{
             x: cursorX2,
             y: cursorY2,
@@ -93,7 +109,7 @@ const CustomCursor: React.FC = () => {
         />
         {/* Trailing Blob 2 */}
         <motion.div
-          className="absolute top-0 left-0 bg-violet-500 rounded-full"
+          className={`absolute top-0 left-0 ${colors.trail2} rounded-full`}
           style={{
             x: cursorX3,
             y: cursorY3,

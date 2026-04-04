@@ -2,9 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import GlassCard from './GlassCard';
+import { AnalysisData } from './AnalysisDashboard';
 
-const HealthScoreCard: React.FC = () => {
-  const score = 62;
+interface HealthScoreCardProps {
+  analysis: AnalysisData | null;
+  symptoms: string;
+}
+
+const getSeverityScore = (symptoms: string) => {
+  const s = symptoms.toLowerCase();
+  if (s.includes('chest pain') || s.includes('heart') || s.includes('breath') || s.includes('stroke')) return 35; // Critical
+  if (s.includes('fracture') || s.includes('pain') || s.includes('fever') || s.includes('trauma')) return 55; // At Risk
+  if (s.includes('cough') || s.includes('headache') || s.includes('nausea') || s.includes('dizz')) return 75; // Moderate
+  return 92; // Good/Minor
+};
+
+const HealthScoreCard: React.FC<HealthScoreCardProps> = ({ analysis, symptoms }) => {
+  const targetScore = analysis ? getSeverityScore(symptoms) : 0;
+  const score = Math.max(15, Math.min(100, targetScore)); // Clamp between 15-100
   const maxScore = 100;
   const circumference = 2 * Math.PI * 45;
   const offset = circumference - (score / maxScore) * circumference;
@@ -21,7 +36,7 @@ const HealthScoreCard: React.FC = () => {
       setAnimatedScore(current);
     }, 20);
     return () => clearInterval(timer);
-  }, []);
+  }, [score]);
 
   const getScoreColor = (s: number) => {
     if (s >= 80) return '#4ade80';
@@ -36,13 +51,14 @@ const HealthScoreCard: React.FC = () => {
     return 'Critical';
   };
 
-  const color = getScoreColor(score);
+  const color = analysis ? getScoreColor(score) : '#ffffff40';
+  const displayScore = analysis ? animatedScore : '-';
 
   return (
     <GlassCard className="h-full flex flex-col items-center justify-center" delay={0.3}>
       <div className="flex items-center gap-2 self-start mb-3">
-        <Heart size={14} className="text-ll-red" />
-        <span className="text-xs font-bold tracking-widest text-white/50 uppercase">Health Score</span>
+        <Heart size={14} className={analysis ? "text-ll-red" : "text-white/30"} />
+        <span className="text-xs font-bold tracking-widest text-white/40 uppercase">Health Score</span>
       </div>
 
       {/* Circular gauge */}
@@ -61,9 +77,9 @@ const HealthScoreCard: React.FC = () => {
             strokeLinecap="round"
             strokeDasharray={circumference}
             initial={{ strokeDashoffset: circumference }}
-            animate={{ strokeDashoffset: offset }}
+            animate={{ strokeDashoffset: analysis ? offset : circumference }}
             transition={{ duration: 2, delay: 0.5, ease: 'easeOut' }}
-            style={{ filter: `drop-shadow(0 0 8px ${color}40)` }}
+            style={{ filter: analysis ? `drop-shadow(0 0 8px ${color}40)` : 'none' }}
           />
         </svg>
 
@@ -73,7 +89,7 @@ const HealthScoreCard: React.FC = () => {
             className="text-3xl font-extrabold font-mono-data"
             style={{ color }}
           >
-            {animatedScore}
+            {displayScore}
           </motion.span>
           <span className="text-[9px] text-white/50 font-bold uppercase tracking-widest mt-0.5">
             / {maxScore}
@@ -88,16 +104,17 @@ const HealthScoreCard: React.FC = () => {
           background: `${color}15`,
           color: color,
           border: `1px solid ${color}25`,
+          opacity: analysis ? 1 : 0.4
         }}
       >
-        {getScoreLabel(score)}
+        {analysis ? getScoreLabel(score) : 'Analyzing'}
       </span>
 
       {/* Mini stats */}
-      <div className="flex gap-4 mt-3 text-[10px] text-white/50">
-        <span>Heart: <span className="text-white/50 font-bold">Good</span></span>
-        <span>Lungs: <span className="text-white/50 font-bold">Fair</span></span>
-        <span>Vitals: <span className="text-white/50 font-bold">Normal</span></span>
+      <div className="flex gap-4 mt-3 text-[10px] text-white/25">
+        <span className={analysis && score < 50 ? 'text-red-400/80 animate-pulse' : ''}>Heart: <span className="text-white/50 font-bold">{analysis && score < 50 ? 'Stress' : 'Good'}</span></span>
+        <span className={analysis && score < 70 ? 'text-yellow-400/80' : ''}>Lungs: <span className="text-white/50 font-bold">{analysis && score < 70 ? 'Fair' : 'Clear'}</span></span>
+        <span>Vitals: <span className="text-white/50 font-bold">{analysis ? 'Logged' : 'Pending'}</span></span>
       </div>
     </GlassCard>
   );

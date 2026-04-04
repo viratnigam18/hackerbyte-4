@@ -1,0 +1,17 @@
+﻿* Removed node_modules and added gitignore
+* chore: ignore node_modules and vite cache to fix pull conflict
+* fix frontend and connected mental state
+* fix frontend and connected mental state
+* Merge branch 'main' of https://github.com/viratnigam18/hackerbyte-4
+* image to text to problem
+* Merge branch 'main' of https://github.com/viratnigam18/hackerbyte-4
+* hello world
+* Merge branch 'main' of https://github.com/viratnigam18/hackerbyte-4
+* git ignore
+* added frontend
+* added mental model model not the big file -virat
+* added mental model model not the big file -virat
+* pic to symptms
+* Purely offline AI Doctor bot (TF-IDF only)
+* update offline ai doctor bot llm
+* Initial commit
