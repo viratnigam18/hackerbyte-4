@@ -1,9 +1,21 @@
-*.joblib
-.env
+# Python
 __pycache__/
 *.pyc
+*.joblib
+*.pt
+*.h5
 
-# Node.js
-**/node_modules/
-**/dist/
-**/.vite/
+# Env
+.env
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

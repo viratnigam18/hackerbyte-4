@@ -1,0 +1,92 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Shield } from 'lucide-react';
+import AIAnalysisPanel from './AIAnalysisPanel';
+import FutureHealthPrediction from './FutureHealthPrediction';
+import HealthScoreCard from './HealthScoreCard';
+import NearbyHospitalsPanel from './NearbyHospitalsPanel';
+import MedicineRemediesPanel from './MedicineRemediesPanel';
+import MapSection from './MapSection';
+
+interface AnalysisDashboardProps {
+  symptoms: string;
+  onBack: () => void;
+}
+
+const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack }) => {
+  return (
+    <div className="w-full h-full flex flex-col overflow-hidden">
+      {/* Top Bar */}
+      <div className="flex items-center justify-between px-6 py-3 border-b border-white/[0.06] bg-[rgba(8,32,20,0.6)] backdrop-blur-xl relative z-20">
+        <div className="flex items-center gap-3">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onBack}
+            className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/30 hover:text-ll-cyan hover:border-ll-cyan/20 transition-all"
+          >
+            <ArrowLeft size={16} />
+          </motion.button>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-ll-cyan to-emerald-400 flex items-center justify-center shadow-glow-cyan">
+              <Shield size={14} className="text-ll-bg" strokeWidth={2.5} />
+            </div>
+            <span className="text-sm font-bold text-white">LifeLine</span>
+            <span className="text-[9px] font-bold text-ll-cyan/60 uppercase bg-ll-cyan/[0.08] px-2 py-0.5 rounded-full border border-ll-cyan/[0.15]">AI Analysis</span>
+          </div>
+        </div>
+
+        <div className="hidden md:flex items-center gap-5 text-[10px] text-white/25 font-medium">
+          <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-ll-emerald animate-pulse" />System Online</span>
+          <span className="w-px h-3 bg-white/[0.06]" />
+          <span>Analysis Complete</span>
+        </div>
+      </div>
+
+      {/* Dashboard Grid — matches sketch layout exactly */}
+      <div className="flex-1 overflow-y-auto px-5 py-4 pb-20">
+        <div className="max-w-[1500px] mx-auto">
+
+          {/* Top Row: AI Analysis | Future Prediction + Health Score | Nearby Hospitals */}
+          <div className="grid grid-cols-12 gap-4 mb-4" style={{ minHeight: '380px' }}>
+            {/* LEFT: AI Analysis — 4 cols, full height */}
+            <div className="col-span-12 md:col-span-4">
+              <AIAnalysisPanel symptoms={symptoms} />
+            </div>
+
+            {/* CENTER: Future Prediction (top) + Health Score (bottom) — 4 cols */}
+            <div className="col-span-12 md:col-span-4 flex flex-col gap-4">
+              <div className="flex-1">
+                <FutureHealthPrediction />
+              </div>
+              <div className="flex-1">
+                <HealthScoreCard />
+              </div>
+            </div>
+
+            {/* RIGHT: Nearby Hospitals — 4 cols, full height */}
+            <div className="col-span-12 md:col-span-4">
+              <NearbyHospitalsPanel />
+            </div>
+          </div>
+
+          {/* Bottom Row: Medicine & Remedies | Map */}
+          <div className="grid grid-cols-12 gap-4" style={{ minHeight: '280px' }}>
+            {/* LEFT: Medicine & Remedies — 6 cols */}
+            <div className="col-span-12 md:col-span-6">
+              <MedicineRemediesPanel />
+            </div>
+
+            {/* RIGHT: Map — 6 cols */}
+            <div className="col-span-12 md:col-span-6">
+              <MapSection />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AnalysisDashboard;
