@@ -9,3 +9,4 @@ mental_model/models/
 __pycache__/
 *.pyc
 .env
+node_modules
