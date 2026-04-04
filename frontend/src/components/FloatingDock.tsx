@@ -7,6 +7,7 @@ import {
   User,
   Watch,
   Pill,
+  Gamepad2,
 } from 'lucide-react';
 
 interface FloatingDockProps {
@@ -21,6 +22,7 @@ const dockItems = [
   { id: 'profile', icon: User, label: 'Profile' },
   { id: 'watch', icon: Watch, label: 'Watch' },
   { id: 'medication', icon: Pill, label: 'Medication' },
+  { id: 'anti-stress', icon: Gamepad2, label: 'Anti-Stress Game' },
 ];
 
 const FloatingDock: React.FC<FloatingDockProps> = ({ activePage, onNavigate }) => {

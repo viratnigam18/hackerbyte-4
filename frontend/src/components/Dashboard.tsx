@@ -5,12 +5,13 @@ import LandingScreen from './LandingScreen';
 import AnalysisDashboard from './AnalysisDashboard';
 import MentalHealthChat from './MentalHealthChat';
 import FloatingDock from './FloatingDock';
+import AntiStressGame from './AntiStressGame';
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
-type Screen = 'landing' | 'analysis' | 'mental-health';
+type Screen = 'landing' | 'analysis' | 'mental-health' | 'anti-stress';
 
 const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const [screen, setScreen] = useState<Screen>('landing');
@@ -29,6 +30,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const handleNavigate = (page: string) => {
     if (page === 'dashboard') setScreen('landing');
     else if (page === 'mental-health') setScreen('mental-health');
+    else if (page === 'anti-stress') setScreen('anti-stress');
     else setScreen('landing');
   };
 
@@ -98,12 +100,25 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
               </div>
             </motion.div>
           )}
+
+          {screen === 'anti-stress' && (
+            <motion.div
+              key="anti-stress"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full"
+            >
+              <AntiStressGame onBack={() => setScreen('landing')} />
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
 
       {/* Floating Dock */}
       <FloatingDock
-        activePage={screen === 'landing' || screen === 'analysis' ? 'dashboard' : 'mental-health'}
+        activePage={screen === 'landing' || screen === 'analysis' ? 'dashboard' : screen}
         onNavigate={handleNavigate}
       />
     </div>

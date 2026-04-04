@@ -5,7 +5,7 @@ import RightVisualComponent from './components/RightVisualComponent';
 import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(true);
 
   if (isAuthenticated) {
     return <Dashboard onLogout={() => setIsAuthenticated(false)} />;
