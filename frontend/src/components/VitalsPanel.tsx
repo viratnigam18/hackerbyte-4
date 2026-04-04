@@ -185,9 +185,11 @@ const VitalsPanel: React.FC = () => {
       });
 
       setIsConnected(true);
-    } catch (error) {
-      console.error("Bluetooth connection failed:", error);
-      // Ignore cancellation exceptions from user
+    } catch (error: any) {
+      if (error && error.name !== 'NotFoundError') {
+        console.error("Bluetooth connection failed:", error);
+      }
+      // If error.name is 'NotFoundError', the user just cancelled the chooser popup. No need to log an error.
     } finally {
       setIsConnecting(false);
     }

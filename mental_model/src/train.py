@@ -10,6 +10,7 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from preprocess import load_mental_data
 
 MODEL_NAME = "distilbert-base-uncased"
+FAST_HACKATHON_MODE = True # Set to False for final full training
 
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels):
@@ -65,6 +66,11 @@ def train():
     # Load dataset
     df = load_mental_data(data_path)
 
+    if FAST_HACKATHON_MODE:
+        print("\n⚡ FAST HACKATHON MODE ENABLED: Using a subset of data so it trains in minutes instead of hours on CPU.")
+        # Subsample to 5000 samples
+        df = df.sample(n=min(5000, len(df)), random_state=42).reset_index(drop=True)
+
     # Encode labels
     le = LabelEncoder()
     df['label'] = le.fit_transform(df['label'])
@@ -92,8 +98,8 @@ def train():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
     # Tokenize
-    train_encodings = tokenizer(texts_train, truncation=True, padding=True)
-    val_encodings = tokenizer(texts_val, truncation=True, padding=True)
+    train_encodings = tokenizer(texts_train, truncation=True, padding=True, max_length=128)
+    val_encodings = tokenizer(texts_val, truncation=True, padding=True, max_length=128)
 
     # Create datasets
     train_dataset = Dataset(train_encodings, labels_train)
@@ -105,17 +111,23 @@ def train():
         num_labels=len(unique_classes)
     )
 
+    if FAST_HACKATHON_MODE:
+        # Freeze the transformer layers so we only train the classification head
+        print("⚡ Freezing base transformer layers for blazing fast CPU training...")
+        for param in model.base_model.parameters():
+            param.requires_grad = False
+
     # Optimized Training config
     training_args = TrainingArguments(
         output_dir=models_dir,
         num_train_epochs=3,
-        per_device_train_batch_size=8,
-        per_device_eval_batch_size=8,
+        per_device_train_batch_size=16,
+        per_device_eval_batch_size=16,
         eval_strategy="epoch",
         save_strategy="epoch",
         logging_dir=logs_dir,
         logging_steps=50,
-        learning_rate=2e-5,
+        learning_rate=2e-4 if FAST_HACKATHON_MODE else 2e-5,
         weight_decay=0.01,
         fp16=torch.cuda.is_available(),
         load_best_model_at_end=True,
