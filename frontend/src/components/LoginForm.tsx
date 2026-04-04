@@ -23,7 +23,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-gradient-to-br from-white to-fintech-mint/20 px-8 py-10 sm:px-16 lg:px-20 overflow-y-auto">
+    <div className="flex flex-col h-full w-full bg-gradient-to-br from-white to-lifeline-mint/20 px-8 py-10 sm:px-16 lg:px-20 overflow-y-auto">
       {/* Logo */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
@@ -31,10 +31,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         transition={{ delay: 0.3 }}
         className="flex items-center gap-2 mb-16"
       >
-        <div className="w-8 h-8 bg-fintech-navy rounded-lg flex items-center justify-center">
-          <div className="w-3 h-3 bg-fintech-mint rounded-full"></div>
+        <div className="w-8 h-8 bg-lifeline-navy rounded-lg flex items-center justify-center">
+          <div className="w-3 h-3 bg-lifeline-mint rounded-full"></div>
         </div>
-        <span className="font-bold text-xl tracking-tight text-fintech-navy">LifeLine</span>
+        <span className="font-bold text-xl tracking-tight text-lifeline-navy">LifeLine</span>
       </motion.div>
 
       {/* Heading */}
@@ -73,7 +73,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 focus:border-fintech-navy focus:ring-4 focus:ring-fintech-navy/10 outline-none transition-all duration-300 shadow-soft"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 focus:border-lifeline-navy focus:ring-4 focus:ring-lifeline-navy/10 outline-none transition-all duration-300 shadow-soft"
             />
           </div>
 
@@ -86,7 +86,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 focus:border-fintech-navy focus:ring-4 focus:ring-fintech-navy/10 outline-none transition-all duration-300 shadow-soft pr-12"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 focus:border-lifeline-navy focus:ring-4 focus:ring-lifeline-navy/10 outline-none transition-all duration-300 shadow-soft pr-12"
               />
               <button 
                 type="button"
@@ -97,7 +97,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               </button>
             </div>
             <div className="flex justify-end pt-2">
-              <a href="#" className="text-sm font-medium text-fintech-navy hover:text-blue-800 transition-colors">
+              <a href="#" className="text-sm font-medium text-lifeline-navy hover:text-blue-800 transition-colors">
                 Forgot password?
               </a>
             </div>
@@ -107,7 +107,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-3.5 bg-fintech-navy text-white rounded-xl font-semibold shadow-glow hover:shadow-lg transition-all"
+            className="w-full py-3.5 bg-lifeline-navy text-white rounded-xl font-semibold shadow-glow hover:shadow-lg transition-all"
           >
             Sign in
           </motion.button>
@@ -144,7 +144,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           transition={{ delay: 0.6 }}
           className="text-center mt-8 text-sm text-gray-500"
         >
-          Don't have an account? <a href="#" className="font-semibold text-fintech-navy hover:underline">Sign Up</a>
+          Don't have an account? <a href="#" className="font-semibold text-lifeline-navy hover:underline">Sign Up</a>
         </motion.p>
       </div>
     </div>

@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        fintech: { dark: '#0B0D17', mint: '#D1F2EB', navy: '#1A237E', accent1: '#4facfe', accent2: '#00f2fe' },
+        lifeline: { dark: '#0B0D17', mint: '#D1F2EB', navy: '#1A237E', accent1: '#4facfe', accent2: '#00f2fe' },
         ll: {
           bg: '#071a10',
           'bg-light': '#0c2a1a',

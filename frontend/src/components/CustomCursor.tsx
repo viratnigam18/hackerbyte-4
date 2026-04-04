@@ -63,7 +63,7 @@ const CustomCursor: React.FC<CustomCursorProps> = ({ variant = 'default' }) => {
         trail2: 'bg-green-400'
       }
     : {
-        main: 'bg-fintech-navy',
+        main: 'bg-lifeline-navy',
         trail1: 'bg-blue-500',
         trail2: 'bg-violet-500'
       };
