@@ -78,11 +78,11 @@ const ParticleHeart: React.FC = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.12}
-          color="#ff3333"
+          size={0.1}
+          color="#2DD4BF"
           map={particleTexture}
           transparent
-          opacity={0.8}
+          opacity={0.7}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
@@ -92,14 +92,14 @@ const ParticleHeart: React.FC = () => {
       <mesh ref={meshRef}>
         <icosahedronGeometry args={[1.5, 2]} />
         <meshPhysicalMaterial 
-          color="#D1F2EB" 
+          color="#22D3EE" 
           wireframe={true} 
           transparent
-          opacity={0.15}
+          opacity={0.1}
           roughness={0.1}
           metalness={0.9}
-          emissive="#1A237E"
-          emissiveIntensity={0.2}
+          emissive="#A78BFA"
+          emissiveIntensity={0.15}
         />
       </mesh>
     </group>

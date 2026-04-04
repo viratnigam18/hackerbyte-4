@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  LineChart, 
-  History, 
-  User, 
-  Watch, 
+import {
+  LineChart,
+  History,
+  User,
+  Watch,
   Pill,
   Shield
 } from 'lucide-react';
