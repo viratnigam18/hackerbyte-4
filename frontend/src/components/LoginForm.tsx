@@ -34,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         <div className="w-8 h-8 bg-fintech-navy rounded-lg flex items-center justify-center">
           <div className="w-3 h-3 bg-fintech-mint rounded-full"></div>
         </div>
-        <span className="font-bold text-xl tracking-tight text-fintech-navy">.Finance</span>
+        <span className="font-bold text-xl tracking-tight text-fintech-navy">LifeLine</span>
       </motion.div>
 
       {/* Heading */}
