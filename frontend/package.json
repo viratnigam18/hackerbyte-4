@@ -13,11 +13,15 @@
     "@react-three/drei": "^9.106.0",
     "@react-three/fiber": "^8.16.8",
     "@react-three/postprocessing": "^2.16.2",
+    "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
     "lucide-react": "^0.395.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.165.0"
+    "recharts": "^3.8.1",
+    "tailwind-merge": "^3.5.0",
+    "three": "^0.165.0",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

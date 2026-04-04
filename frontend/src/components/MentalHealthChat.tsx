@@ -115,9 +115,9 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
   return (
     <div className="flex flex-col h-full text-white overflow-hidden" style={{ background: 'transparent' }}>
       {/* Header */}
-      <div className="flex items-center gap-4 px-6 py-4 border-b border-white/[0.05] bg-white/[0.02] backdrop-blur-sm">
+      <div className="flex items-center gap-4 px-6 py-4 border-b border-white/[0.08] bg-white/[0.04] backdrop-blur-md">
         <button onClick={onBack} className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] flex items-center justify-center transition-colors">
-          <ArrowLeft size={18} className="text-gray-400" />
+          <ArrowLeft size={18} className="text-white/40" />
         </button>
         <div className="flex items-center gap-3 flex-1">
           <div className="relative">
@@ -128,7 +128,7 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
           </div>
           <div>
             <h2 className="text-sm font-bold tracking-wide">Mental Health Assistant</h2>
-            <p className="text-[11px] text-white/30 font-medium">AI-Powered Support • Always Listening</p>
+            <p className="text-[11px] text-white/50 font-medium">AI-Powered Support • Always Listening</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5 bg-ll-purple/10 px-3 py-1.5 rounded-full border border-ll-purple/20">
@@ -157,13 +157,13 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
                 </div>
               ) : msg.type === 'system' ? (
                 <div className="max-w-[85%] mx-auto">
-                  <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-2xl px-5 py-4 text-center">
+                  <div className="bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-2xl px-5 py-4 text-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <Heart size={14} className="text-pink-400" />
                       <span className="text-[11px] font-bold text-pink-400 uppercase tracking-widest">Safe Space</span>
                       <Heart size={14} className="text-pink-400" />
                     </div>
-                    <p className="text-sm text-white/40 leading-relaxed">{msg.text}</p>
+                    <p className="text-sm text-white/50 leading-relaxed">{msg.text}</p>
                   </div>
                 </div>
               ) : (
@@ -173,13 +173,13 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
                       <Brain size={14} />
                     </div>
                     <div className="space-y-2 flex-1">
-                      <div className="bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] rounded-2xl rounded-tl-md px-4 py-3">
-                        <p className="text-sm leading-relaxed text-white/80">{msg.text}</p>
+                      <div className="bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-2xl rounded-tl-md px-4 py-3">
+                        <p className="text-sm leading-relaxed text-white/70">{msg.text}</p>
                         {msg.status && (
-                          <div className="flex items-center gap-3 mt-3 pt-3 border-t border-white/[0.06]">
+                          <div className="flex items-center gap-3 mt-3 pt-3 border-t border-white/[0.08]">
                             {msg.severity && msg.color && getSeverityBadge(msg.severity, msg.color)}
                             {msg.confidence !== undefined && (
-                              <span className="text-[11px] text-white/30 font-medium">
+                              <span className="text-[11px] text-white/50 font-medium">
                                 {(msg.confidence * 100).toFixed(1)}% confidence
                               </span>
                             )}
@@ -191,14 +191,14 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2 }}
-                          className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3"
+                          className="bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3"
                         >
                           <p className="text-[11px] font-bold text-ll-purple uppercase tracking-widest mb-2.5 flex items-center gap-1.5">
                             <Sparkles size={12} /> Suggestions for you
                           </p>
                           <ul className="space-y-2">
                             {msg.tips.map((tip, i) => (
-                              <li key={i} className="flex items-start gap-2 text-xs text-white/40 leading-relaxed">
+                              <li key={i} className="flex items-start gap-2 text-xs text-white/50 leading-relaxed">
                                 <span
                                   className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 mt-0.5"
                                   style={{ backgroundColor: `${msg.color || '#8B5CF6'}15`, color: msg.color || '#8B5CF6' }}
@@ -211,7 +211,7 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
                           </ul>
                         </motion.div>
                       )}
-                      <p className="text-[10px] text-white/20 pl-1">
+                      <p className="text-[10px] text-white/40 pl-1">
                         {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
@@ -226,10 +226,10 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-ll-purple to-fuchsia-500 flex items-center justify-center flex-shrink-0 shadow-glow-purple">
               <Brain size={14} />
             </div>
-            <div className="bg-white/[0.05] border border-white/[0.08] rounded-2xl rounded-tl-md px-4 py-3">
+            <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl rounded-tl-md px-4 py-3">
               <div className="flex items-center gap-2">
                 <Loader2 size={14} className="text-ll-purple animate-spin" />
-                <span className="text-xs text-white/30">Analyzing your message...</span>
+                <span className="text-xs text-white/50">Analyzing your message...</span>
               </div>
             </div>
           </motion.div>
@@ -239,14 +239,14 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
 
       {/* Disclaimer */}
       <div className="px-6 pb-1">
-        <p className="text-[10px] text-white/20 text-center">
+        <p className="text-[10px] text-white/40 text-center">
           ⚠️ Not a replacement for professional care. Crisis: <span className="text-ll-red font-semibold">112</span> | <span className="text-ll-purple font-semibold">iCall: 9152987821</span>
         </p>
       </div>
 
       {/* Input */}
       <div className="px-4 pb-4 pt-2">
-        <div className="flex items-center gap-3 bg-white/[0.04] border border-white/[0.06] rounded-2xl px-4 py-2 focus-within:border-ll-purple/30 focus-within:bg-white/[0.06] transition-all">
+        <div className="flex items-center gap-3 bg-white/[0.03] backdrop-blur-[24px] border border-white/[0.08] rounded-2xl px-4 py-2 focus-within:border-ll-purple/30 focus-within:bg-white/[0.05] transition-all">
           <input
             ref={inputRef}
             type="text"
@@ -254,7 +254,7 @@ const MentalHealthChat: React.FC<MentalHealthChatProps> = ({ onBack }) => {
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Share how you're feeling..."
-            className="flex-1 bg-transparent outline-none text-sm text-white/80 placeholder-white/20"
+            className="flex-1 bg-transparent outline-none text-sm text-white/90 placeholder-white/30"
             disabled={isLoading}
           />
           <button

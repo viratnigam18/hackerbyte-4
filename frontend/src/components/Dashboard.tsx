@@ -5,13 +5,22 @@ import LandingScreen from './LandingScreen';
 import AnalysisDashboard from './AnalysisDashboard';
 import MentalHealthChat from './MentalHealthChat';
 import FloatingDock from './FloatingDock';
+<<<<<<< HEAD
 import AntiStressGame from './AntiStressGame';
+=======
+import ProfileView from './ProfileView';
+import HistoryView from './HistoryView';
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
+<<<<<<< HEAD
 type Screen = 'landing' | 'analysis' | 'mental-health' | 'anti-stress';
+=======
+type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile';
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
 
 const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const [screen, setScreen] = useState<Screen>('landing');
@@ -30,7 +39,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const handleNavigate = (page: string) => {
     if (page === 'dashboard') setScreen('landing');
     else if (page === 'mental-health') setScreen('mental-health');
+<<<<<<< HEAD
     else if (page === 'anti-stress') setScreen('anti-stress');
+=======
+    else if (page === 'history') setScreen('history');
+    else if (page === 'profile') setScreen('profile');
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
     else setScreen('landing');
   };
 
@@ -101,6 +115,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
             </motion.div>
           )}
 
+<<<<<<< HEAD
           {screen === 'anti-stress' && (
             <motion.div
               key="anti-stress"
@@ -111,6 +126,31 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
               className="h-full"
             >
               <AntiStressGame onBack={() => setScreen('landing')} />
+=======
+          {screen === 'history' && (
+            <motion.div
+              key="history"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full overflow-y-auto pb-24"
+            >
+              <HistoryView />
+            </motion.div>
+          )}
+
+          {screen === 'profile' && (
+            <motion.div
+              key="profile"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full overflow-y-auto pb-24"
+            >
+              <ProfileView />
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
             </motion.div>
           )}
         </AnimatePresence>

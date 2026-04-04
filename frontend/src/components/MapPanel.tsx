@@ -80,15 +80,15 @@ const MapPanel: React.FC = () => {
         </div>
 
         {/* Map label */}
-        <div className="absolute top-3 left-4 flex items-center gap-2 bg-white/[0.05] backdrop-blur-sm px-2.5 py-1.5 rounded-lg border border-white/[0.06]">
+        <div className="absolute top-3 left-4 flex items-center gap-2 bg-white/[0.04] backdrop-blur-[24px] px-2.5 py-1.5 rounded-lg border border-white/[0.08]">
           <MapPin size={12} className="text-ll-teal" />
-          <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">Hospital Locator</span>
+          <span className="text-[10px] font-bold tracking-widest text-white/50 uppercase">Hospital Locator</span>
         </div>
       </div>
 
       {/* Filter bar */}
-      <div className="px-4 py-3 flex items-center gap-2 border-t border-white/[0.04]">
-        <Filter size={12} className="text-white/20" />
+      <div className="px-4 py-3 flex items-center gap-2 border-t border-white/[0.08]">
+        <Filter size={12} className="text-white/50" />
         {filters.map((f, i) => (
           <button
             key={f}
@@ -96,7 +96,7 @@ const MapPanel: React.FC = () => {
               text-[10px] font-semibold px-2.5 py-1 rounded-lg transition-all duration-200
               ${i === 0
                 ? 'bg-ll-teal/15 text-ll-teal border border-ll-teal/20'
-                : 'text-white/30 hover:text-white/50 hover:bg-white/[0.04]'
+                : 'text-white/50 hover:text-white/50 hover:bg-white/[0.04]'
               }
             `}
           >

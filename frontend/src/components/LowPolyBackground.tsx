@@ -2,10 +2,17 @@ import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
+const HOVER_RADIUS = 4.0;     // world-space radius of the hover influence
+const HOVER_STRENGTH = 1.2;   // max Z displacement toward camera
+const HOVER_SMOOTHING = 0.08; // lerp speed for the displacement (0–1)
+
 const LowPolyMesh: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
   const mouse = useRef({ x: 0, y: 0 });
+
+  // Per-vertex current displacement driven by hover (smoothly animated)
+  const hoverDisp = useRef<Float32Array | null>(null);
 
   // Build geometry once
   const geometry = useMemo(() => {
@@ -79,10 +86,17 @@ const LowPolyMesh: React.FC = () => {
     return nonIndexed;
   }, []);
 
-  // Capture original Z positions for animation
-  const originalZ = useMemo(() => {
+  // Capture original positions for animation (full xyz)
+  const originalPositions = useMemo(() => {
     if (!geometry) return new Float32Array(0);
     return new Float32Array(geometry.attributes.position.array);
+  }, [geometry]);
+
+  // Initialize hover displacement buffer
+  useEffect(() => {
+    if (geometry) {
+      hoverDisp.current = new Float32Array(geometry.attributes.position.count);
+    }
   }, [geometry]);
 
   // Mouse tracking
@@ -97,21 +111,46 @@ const LowPolyMesh: React.FC = () => {
 
   // Animation loop
   useFrame(({ clock }) => {
-    if (!meshRef.current || !lightRef.current) return;
+    if (!meshRef.current || !lightRef.current || !hoverDisp.current) return;
     const t = clock.getElapsedTime();
+    const mx = mouse.current.x;
+    const my = mouse.current.y;
 
     // Move spotlight toward mouse (smooth follow)
-    lightRef.current.position.x += (mouse.current.x - lightRef.current.position.x) * 0.04;
-    lightRef.current.position.y += (mouse.current.y - lightRef.current.position.y) * 0.04;
+    lightRef.current.position.x += (mx - lightRef.current.position.x) * 0.06;
+    lightRef.current.position.y += (my - lightRef.current.position.y) * 0.06;
 
-    // Subtle wave displacement on Z axis
+    // Animate vertex positions: wave + hover displacement
     const pos = meshRef.current.geometry.attributes.position;
+    const hd = hoverDisp.current;
+    const rSq = HOVER_RADIUS * HOVER_RADIUS;
+
     for (let i = 0; i < pos.count; i++) {
-      const ox = originalZ[i * 3];
-      const oy = originalZ[i * 3 + 1];
-      const oz = originalZ[i * 3 + 2];
+      const ox = originalPositions[i * 3];
+      const oy = originalPositions[i * 3 + 1];
+      const oz = originalPositions[i * 3 + 2];
+
+      // Subtle background wave
       const wave = Math.sin(ox * 0.5 + t * 0.4) * 0.03 + Math.cos(oy * 0.4 + t * 0.3) * 0.03;
-      pos.setZ(i, oz + wave);
+
+      // Hover displacement — vertices near mouse push toward camera (+Z)
+      const dx = ox - mx;
+      const dy = oy - my;
+      const distSq = dx * dx + dy * dy;
+
+      // Target displacement: strong at center, falls off smoothly
+      let targetDisp = 0;
+      if (distSq < rSq) {
+        const dist = Math.sqrt(distSq);
+        const falloff = 1 - dist / HOVER_RADIUS;
+        // Smooth cubic falloff for natural look
+        targetDisp = HOVER_STRENGTH * falloff * falloff * (3 - 2 * falloff);
+      }
+
+      // Smoothly interpolate current displacement toward target
+      hd[i] += (targetDisp - hd[i]) * HOVER_SMOOTHING;
+
+      pos.setZ(i, oz + wave + hd[i]);
     }
     pos.needsUpdate = true;
     meshRef.current.geometry.computeVertexNormals();
@@ -122,21 +161,23 @@ const LowPolyMesh: React.FC = () => {
       {/* Ambient base light */}
       <ambientLight intensity={0.35} color="#1a5c35" />
       {/* Directional for depth */}
-      <directionalLight color="#2f855a" intensity={0.4} position={[5, 5, 10]} />
-      {/* Mouse-following spotlight — this creates the hover glow effect */}
+      <directionalLight color="#2f855a" intensity={0.5} position={[5, 5, 10]} />
+      {/* Mouse-following spotlight — BRIGHT hover glow */}
       <pointLight
         ref={lightRef}
-        color="#6ee7a0"
-        intensity={4}
-        distance={12}
-        decay={2}
-        position={[0, 0, 4]}
+        color="#a7f3d0"
+        intensity={18}
+        distance={18}
+        decay={1.8}
+        position={[0, 0, 5]}
       />
       {/* Secondary fill light */}
-      <pointLight color="#4ade80" intensity={1} position={[-8, -4, 6]} />
+      <pointLight color="#4ade80" intensity={1.5} position={[-8, -4, 6]} />
+      {/* Extra accent from opposite side */}
+      <pointLight color="#34d399" intensity={1} position={[10, 5, 6]} />
 
       <mesh ref={meshRef} geometry={geometry} rotation={[0, 0, 0]}>
-        <meshPhongMaterial vertexColors flatShading shininess={8} />
+        <meshPhongMaterial vertexColors flatShading shininess={12} specular={new THREE.Color('#2a7a4a')} />
       </mesh>
     </>
   );

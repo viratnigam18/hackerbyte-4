@@ -25,13 +25,13 @@ const AIRecommendation: React.FC = () => {
         </motion.div>
         <div>
           <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase">AI Analysis</h3>
-          <p className="text-[10px] text-white/25">Powered by LifeLine AI</p>
+          <p className="text-[10px] text-white/50">Powered by LifeLine AI</p>
         </div>
       </div>
 
       {/* Content */}
       <div className="flex-1 flex flex-col justify-center relative z-10">
-        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3 mb-3">
+        <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3 mb-3">
           <div className="flex items-center gap-2 mb-2">
             <Zap size={12} className="text-ll-teal" />
             <span className="text-[10px] font-bold text-ll-teal tracking-wide">IDENTIFIED CONDITION</span>
@@ -39,7 +39,7 @@ const AIRecommendation: React.FC = () => {
           <p className="text-sm text-white/50 italic">Awaiting symptom analysis...</p>
         </div>
 
-        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3 mb-3">
+        <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3 mb-3">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-[10px] font-bold text-ll-cyan tracking-wide">RECOMMENDED FILTERS</span>
           </div>
@@ -48,25 +48,25 @@ const AIRecommendation: React.FC = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-ll-teal" />
               Emergency Room
             </span>
-            <span className="flex items-center gap-1 text-[10px] text-white/30 font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+            <span className="flex items-center gap-1 text-[10px] text-white/50 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-white/[0.04]" />
               Cardiology
             </span>
           </div>
         </div>
 
-        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+        <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-[10px] font-bold text-ll-amber tracking-wide">CONFIDENCE</span>
           </div>
-          <div className="w-full h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: '0%' }}
               className="h-full rounded-full bg-gradient-to-r from-ll-purple to-ll-teal"
             />
           </div>
-          <p className="text-[10px] text-white/25 mt-1">Enter symptoms to begin analysis</p>
+          <p className="text-[10px] text-white/50 mt-1">Enter symptoms to begin analysis</p>
         </div>
       </div>
 

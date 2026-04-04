@@ -65,7 +65,7 @@ const FloatingDock: React.FC<FloatingDockProps> = ({ activePage, onNavigate }) =
                     animate={{ opacity: 1, y: -6, scale: 1 }}
                     exit={{ opacity: 0, y: 4, scale: 0.9 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute -top-9 px-2.5 py-1 rounded-lg bg-white/[0.1] backdrop-blur-sm border border-white/[0.1] whitespace-nowrap"
+                    className="absolute -top-9 px-2.5 py-1 rounded-lg bg-white/[0.1] backdrop-blur-[24px] border border-white/[0.1] whitespace-nowrap"
                   >
                     <span className="text-[11px] font-medium text-white/80">{item.label}</span>
                   </motion.div>

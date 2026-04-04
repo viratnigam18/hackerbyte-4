@@ -42,7 +42,7 @@ const HealthScoreCard: React.FC = () => {
     <GlassCard className="h-full flex flex-col items-center justify-center" delay={0.3}>
       <div className="flex items-center gap-2 self-start mb-3">
         <Heart size={14} className="text-ll-red" />
-        <span className="text-xs font-bold tracking-widest text-white/40 uppercase">Health Score</span>
+        <span className="text-xs font-bold tracking-widest text-white/50 uppercase">Health Score</span>
       </div>
 
       {/* Circular gauge */}
@@ -75,7 +75,7 @@ const HealthScoreCard: React.FC = () => {
           >
             {animatedScore}
           </motion.span>
-          <span className="text-[9px] text-white/30 font-bold uppercase tracking-widest mt-0.5">
+          <span className="text-[9px] text-white/50 font-bold uppercase tracking-widest mt-0.5">
             / {maxScore}
           </span>
         </div>
@@ -94,7 +94,7 @@ const HealthScoreCard: React.FC = () => {
       </span>
 
       {/* Mini stats */}
-      <div className="flex gap-4 mt-3 text-[10px] text-white/25">
+      <div className="flex gap-4 mt-3 text-[10px] text-white/50">
         <span>Heart: <span className="text-white/50 font-bold">Good</span></span>
         <span>Lungs: <span className="text-white/50 font-bold">Fair</span></span>
         <span>Vitals: <span className="text-white/50 font-bold">Normal</span></span>

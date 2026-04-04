@@ -20,10 +20,10 @@ const NearbyHospitalsPanel: React.FC = () => {
           </div>
           <div>
             <h3 className="text-sm font-bold text-white">Nearby Hospitals</h3>
-            <p className="text-[10px] text-white/25">Based on your location</p>
+            <p className="text-[10px] text-white/50">Based on your location</p>
           </div>
         </div>
-        <span className="text-[10px] text-white/20 font-medium bg-white/[0.03] px-2 py-1 rounded-lg border border-white/[0.05]">
+        <span className="text-[10px] text-white/50 font-medium bg-white/[0.04] px-2 py-1 rounded-lg border border-white/[0.08]">
           {hospitals.length} found
         </span>
       </div>
@@ -36,8 +36,8 @@ const NearbyHospitalsPanel: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 + i * 0.1 }}
             className="
-              group p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]
-              hover:bg-white/[0.05] hover:border-white/[0.08]
+              group p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]
+              hover:bg-white/[0.04] hover:border-white/[0.08]
               transition-all duration-200
             "
           >
@@ -45,9 +45,9 @@ const NearbyHospitalsPanel: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="w-2 h-2 rounded-full" style={{ background: h.color }} />
-                  <h4 className="text-sm font-semibold text-white/85">{h.name}</h4>
+                  <h4 className="text-sm font-semibold text-white/50">{h.name}</h4>
                 </div>
-                <p className="text-[10px] text-white/25 font-medium pl-4">{h.specialty}</p>
+                <p className="text-[10px] text-white/50 font-medium pl-4">{h.specialty}</p>
               </div>
               <div className="flex items-center gap-0.5 text-ll-yellow">
                 <Star size={10} fill="currentColor" />
@@ -56,7 +56,7 @@ const NearbyHospitalsPanel: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 text-[10px] text-white/25">
+              <div className="flex items-center gap-3 text-[10px] text-white/50">
                 <span className="flex items-center gap-1"><MapPin size={9} />{h.distance}</span>
                 <span className="flex items-center gap-1"><Clock size={9} />{h.eta}</span>
               </div>

@@ -33,17 +33,17 @@ const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false
       {/* Subtle label */}
       <div className="flex items-center gap-2 mb-3 pl-2">
         <Sparkles size={14} className="text-ll-cyan" />
-        <span className="text-xs text-white/30 font-medium">Describe your symptoms to get AI-powered analysis</span>
+        <span className="text-xs text-white/40 font-medium">Describe your symptoms to get AI-powered analysis</span>
       </div>
 
       {/* Input bar */}
       <div className="
         relative flex items-center
-        bg-white/[0.04] backdrop-blur-[24px]
+        bg-white/[0.03] backdrop-blur-[24px]
         border border-white/[0.08]
         rounded-2xl px-5 py-3
         focus-within:border-ll-cyan/30
-        focus-within:bg-white/[0.06]
+        focus-within:bg-white/[0.05]
         neon-glow-green
         transition-all duration-300
       ">
@@ -57,7 +57,7 @@ const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false
           placeholder="E.g. I have chest pain and shortness of breath..."
           className="
             flex-1 bg-transparent outline-none
-            text-[15px] text-white/85
+            text-[15px] text-white/90
             placeholder-white/20
             font-medium
           "
@@ -72,9 +72,9 @@ const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false
             whileTap={{ scale: 0.9 }}
             className="
               w-9 h-9 rounded-xl
-              bg-white/[0.04] border border-white/[0.06]
+              bg-white/5 border border-white/10
               flex items-center justify-center
-              text-white/30 hover:text-ll-cyan hover:border-ll-cyan/20 hover:bg-ll-cyan/[0.05]
+              text-white/40 hover:text-ll-cyan hover:border-ll-cyan/20 hover:bg-ll-cyan/[0.05]
               transition-all duration-200
             "
             title="Voice input"
@@ -88,9 +88,9 @@ const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false
             whileTap={{ scale: 0.9 }}
             className="
               w-9 h-9 rounded-xl
-              bg-white/[0.04] border border-white/[0.06]
+              bg-white/5 border border-white/10
               flex items-center justify-center
-              text-white/30 hover:text-ll-purple hover:border-ll-purple/20 hover:bg-ll-purple/[0.05]
+              text-white/40 hover:text-ll-purple hover:border-ll-purple/20 hover:bg-ll-purple/[0.05]
               transition-all duration-200
             "
             title="Upload medical report"
@@ -132,8 +132,8 @@ const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false
             onClick={() => setInput(chip)}
             className="
               text-[11px] font-medium px-3 py-1.5 rounded-full
-              bg-white/[0.03] border border-white/[0.06]
-              text-white/30 hover:text-ll-cyan hover:bg-ll-cyan/[0.05] hover:border-ll-cyan/20
+              bg-white/5 border border-white/10
+              text-white/40 hover:text-ll-cyan hover:bg-ll-cyan/[0.05] hover:border-ll-cyan/20
               transition-all duration-200
             "
           >
