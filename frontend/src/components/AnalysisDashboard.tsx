@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Shield } from 'lucide-react';
 import AIAnalysisPanel from './AIAnalysisPanel';
@@ -13,7 +13,43 @@ interface AnalysisDashboardProps {
   onBack: () => void;
 }
 
+export interface AnalysisData {
+  response: string;
+  confidence: number;
+}
+
 const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack }) => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [analysis, setAnalysis] = useState<AnalysisData | null>(null);
+
+  useEffect(() => {
+    const fetchPrediction = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch('http://localhost:8000/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: symptoms })
+        });
+        
+        if (!res.ok) throw new Error('Failed to fetch from AI Doctor API');
+        const data = await res.json();
+        setAnalysis({
+          response: data.response,
+          confidence: data.confidence * 100
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    if (symptoms) fetchPrediction();
+  }, [symptoms]);
+
   return (
     <div className="w-full h-full flex flex-col overflow-hidden">
       {/* Top Bar */}
@@ -37,13 +73,13 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
         </div>
 
         <div className="hidden md:flex items-center gap-5 text-[10px] text-white/25 font-medium">
-          <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-ll-emerald animate-pulse" />System Online</span>
+          <span className="flex items-center gap-1.5"><span className={`w-1.5 h-1.5 rounded-full ${loading ? 'bg-yellow-500 animate-pulse' : 'bg-ll-emerald'}`} />{loading ? 'Analyzing...' : 'System Online'}</span>
           <span className="w-px h-3 bg-white/[0.06]" />
-          <span>Analysis Complete</span>
+          <span>{loading ? 'Processing Input' : 'Analysis Complete'}</span>
         </div>
       </div>
 
-      {/* Dashboard Grid — matches sketch layout exactly */}
+      {/* Dashboard Grid */}
       <div className="flex-1 overflow-y-auto px-5 py-4 pb-20">
         <div className="max-w-[1500px] mx-auto">
 
@@ -51,16 +87,16 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
           <div className="grid grid-cols-12 gap-4 mb-4" style={{ minHeight: '380px' }}>
             {/* LEFT: AI Analysis — 4 cols, full height */}
             <div className="col-span-12 md:col-span-4">
-              <AIAnalysisPanel symptoms={symptoms} />
+              <AIAnalysisPanel symptoms={symptoms} loading={loading} error={error} analysis={analysis} />
             </div>
 
             {/* CENTER: Future Prediction (top) + Health Score (bottom) — 4 cols */}
             <div className="col-span-12 md:col-span-4 flex flex-col gap-4">
               <div className="flex-1">
-                <FutureHealthPrediction />
+                <FutureHealthPrediction analysis={analysis} />
               </div>
               <div className="flex-1">
-                <HealthScoreCard />
+                <HealthScoreCard analysis={analysis} />
               </div>
             </div>
 
@@ -90,3 +126,4 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
 };
 
 export default AnalysisDashboard;
+
