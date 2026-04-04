@@ -13,23 +13,17 @@ interface VitalItem {
 }
 
 const vitalsList: VitalItem[] = [
-  { label: 'Heart', value: 74, unit: 'BPM', icon: <Heart size={14} />, color: '#ff4d4d', min: 70, max: 82 },
-  { label: 'SpO2', value: 98, unit: '%', icon: <Droplets size={14} />, color: '#4ade80', min: 96, max: 99 },
-  { label: 'Stress', value: 28, unit: '', icon: <Brain size={14} />, color: '#a78bfa', min: 20, max: 40 },
+  { label: 'Heart', value: 0, unit: 'BPM', icon: <Heart size={14} />, color: '#ff4d4d', min: 0, max: 0 },
+  { label: 'SpO2', value: 0, unit: '%', icon: <Droplets size={14} />, color: '#4ade80', min: 0, max: 0 },
+  { label: 'Stress', value: 0, unit: '', icon: <Brain size={14} />, color: '#a78bfa', min: 0, max: 0 },
 ];
 
 const VitalsCard: React.FC = () => {
-  const [values, setValues] = useState(vitalsList.map(v => v.value));
+  const [values] = useState(vitalsList.map(v => v.value));
 
+  // Simulation disabled
   useEffect(() => {
-    const interval = setInterval(() => {
-      setValues(prev => prev.map((val, i) => {
-        const v = vitalsList[i];
-        const delta = (Math.random() - 0.5) * 2;
-        return Math.round(Math.min(v.max, Math.max(v.min, val + delta)));
-      }));
-    }, 2500);
-    return () => clearInterval(interval);
+    // keeping effect hook structure in case it's needed later
   }, []);
 
   return (

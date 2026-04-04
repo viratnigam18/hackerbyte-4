@@ -31,8 +31,8 @@ const TelemedicinePanel: React.FC = () => {
             <Video size={14} className="text-ll-emerald" />
           </div>
           <div>
-            <h3 className="text-xs font-bold tracking-widest text-white/40 uppercase">Telemedicine</h3>
-            <p className="text-[10px] text-white/20">Connect with doctors instantly</p>
+            <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase">Telemedicine</h3>
+            <p className="text-[10px] text-white/50">Connect with doctors instantly</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5 bg-ll-emerald/10 px-2.5 py-1 rounded-full border border-ll-emerald/15">
@@ -51,8 +51,8 @@ const TelemedicinePanel: React.FC = () => {
             transition={{ delay: 0.6 + i * 0.08 }}
             className={`
               group flex items-center gap-3 p-3 rounded-xl
-              bg-white/[0.02] border border-white/[0.04]
-              hover:bg-white/[0.05] hover:border-white/[0.08]
+              bg-white/[0.04] border border-white/[0.08]
+              hover:bg-white/[0.04] hover:border-white/[0.08]
               transition-all duration-200
               ${!doc.online ? 'opacity-50' : ''}
             `}
@@ -63,7 +63,7 @@ const TelemedicinePanel: React.FC = () => {
                 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white
                 ${doc.online
                   ? 'bg-gradient-to-br from-ll-teal/30 to-ll-cyan/20'
-                  : 'bg-white/[0.05]'
+                  : 'bg-white/[0.04]'
                 }
               `}>
                 {doc.avatar}
@@ -75,9 +75,9 @@ const TelemedicinePanel: React.FC = () => {
 
             {/* Info */}
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold text-white/80 truncate">{doc.name}</h4>
+              <h4 className="text-sm font-semibold text-white/50 truncate">{doc.name}</h4>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] text-white/30">{doc.specialty}</span>
+                <span className="text-[10px] text-white/50">{doc.specialty}</span>
                 <span className="flex items-center gap-0.5 text-ll-amber">
                   <Star size={8} fill="currentColor" />
                   <span className="text-[10px] font-bold">{doc.rating}</span>

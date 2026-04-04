@@ -36,7 +36,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSymptomSubmit, isLoadin
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="absolute left-1/2 -translate-x-1/2 text-center"
+          className="absolute inset-x-0 flex flex-col items-center text-center"
         >
           <h1 className="text-2xl font-bold text-white neon-text-green">
             Welcome, <span className="text-ll-cyan">{userName}</span>

@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
 import { Navigation2, Filter, Star, DollarSign, Clock } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+=======
+import React from 'react';
+import { Navigation2, Filter } from 'lucide-react';
+>>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
 import GlassCard from './GlassCard';
 
 // Custom icons using SVG
@@ -27,6 +32,7 @@ const hospitalsData = [
 ];
 
 const MapSection: React.FC = () => {
+<<<<<<< HEAD
   const [filter, setFilter] = useState('All');
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -112,6 +118,32 @@ const MapSection: React.FC = () => {
         <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 z-[400] pointer-events-none">
           <Navigation2 size={12} className="text-ll-cyan" />
           <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">Live Map</span>
+=======
+  return (
+    <GlassCard className="h-full flex flex-col relative overflow-hidden" noPadding delay={0.45}>
+      {/* Map area */}
+      <div className="flex-1 relative bg-[#071a10]">
+        <iframe
+          src="https://maps.google.com/maps?q=iiitdm%20jabalpur&t=&z=14&ie=UTF8&iwloc=&output=embed"
+          width="100%"
+          height="100%"
+          style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) opacity(0.8)' }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="IIITDM Jabalpur Map"
+        />
+
+        {/* Overlay to keep the styling dark and green-themed */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(7,26,16,0.6) 100%)'
+        }} />
+
+        {/* Label */}
+        <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 pointer-events-none">
+          <Navigation2 size={12} className="text-ll-cyan" />
+          <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">IIITDM Jabalpur Area</span>
+>>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
         </div>
       </div>
 

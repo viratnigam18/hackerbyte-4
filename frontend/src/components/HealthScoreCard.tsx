@@ -49,8 +49,13 @@ const HealthScoreCard: React.FC<HealthScoreCardProps> = ({ analysis }) => {
   return (
     <GlassCard className="h-full flex flex-col items-center justify-center" delay={0.3}>
       <div className="flex items-center gap-2 self-start mb-3">
+<<<<<<< HEAD
         <Heart size={14} className={analysis ? "text-ll-red" : "text-white/30"} />
         <span className="text-xs font-bold tracking-widest text-white/40 uppercase">Health Score</span>
+=======
+        <Heart size={14} className="text-ll-red" />
+        <span className="text-xs font-bold tracking-widest text-white/50 uppercase">Health Score</span>
+>>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
       </div>
 
       {/* Circular gauge */}
@@ -83,7 +88,7 @@ const HealthScoreCard: React.FC<HealthScoreCardProps> = ({ analysis }) => {
           >
             {displayScore}
           </motion.span>
-          <span className="text-[9px] text-white/30 font-bold uppercase tracking-widest mt-0.5">
+          <span className="text-[9px] text-white/50 font-bold uppercase tracking-widest mt-0.5">
             / {maxScore}
           </span>
         </div>
@@ -103,10 +108,17 @@ const HealthScoreCard: React.FC<HealthScoreCardProps> = ({ analysis }) => {
       </span>
 
       {/* Mini stats */}
+<<<<<<< HEAD
       <div className="flex gap-4 mt-3 text-[10px] text-white/25">
         <span className={analysis && score < 50 ? 'text-red-400/80 animate-pulse' : ''}>Heart: <span className="text-white/50 font-bold">{analysis && score < 50 ? 'Stress' : 'Good'}</span></span>
         <span className={analysis && score < 70 ? 'text-yellow-400/80' : ''}>Lungs: <span className="text-white/50 font-bold">{analysis && score < 70 ? 'Fair' : 'Clear'}</span></span>
         <span>Vitals: <span className="text-white/50 font-bold">{analysis ? 'Logged' : 'Pending'}</span></span>
+=======
+      <div className="flex gap-4 mt-3 text-[10px] text-white/50">
+        <span>Heart: <span className="text-white/50 font-bold">Good</span></span>
+        <span>Lungs: <span className="text-white/50 font-bold">Fair</span></span>
+        <span>Vitals: <span className="text-white/50 font-bold">Normal</span></span>
+>>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
       </div>
     </GlassCard>
   );

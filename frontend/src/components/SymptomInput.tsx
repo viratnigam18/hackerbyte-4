@@ -21,25 +21,25 @@ const SymptomInput: React.FC = () => {
         <div className="w-7 h-7 rounded-lg bg-ll-teal/10 flex items-center justify-center">
           <Search size={14} className="text-ll-teal" />
         </div>
-        <h3 className="text-xs font-bold tracking-widest text-white/40 uppercase">Symptom Checker</h3>
+        <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase">Symptom Checker</h3>
       </div>
 
       {/* Input area */}
       <div className="relative mb-3">
-        <div className="flex items-center bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 focus-within:border-ll-teal/30 focus-within:bg-white/[0.05] transition-all">
+        <div className="flex items-center bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 focus-within:border-ll-teal/30 focus-within:bg-white/[0.04] transition-all">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
             placeholder="Describe your symptoms..."
-            className="bg-transparent outline-none w-full text-sm text-white/80 placeholder-white/20"
+            className="bg-transparent outline-none w-full text-sm text-white/50 placeholder-white/30"
           />
           <div className="flex gap-2 ml-2">
-            <button className="text-white/20 hover:text-ll-teal transition-colors">
+            <button className="text-white/50 hover:text-ll-teal transition-colors">
               <Mic size={16} />
             </button>
-            <button className="text-white/20 hover:text-ll-cyan transition-colors">
+            <button className="text-white/50 hover:text-ll-cyan transition-colors">
               <Camera size={16} />
             </button>
           </div>
@@ -54,8 +54,8 @@ const SymptomInput: React.FC = () => {
             onClick={() => setInput(chip)}
             className="
               text-[10px] font-medium px-2.5 py-1.5 rounded-lg
-              bg-white/[0.03] border border-white/[0.06]
-              text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:border-white/[0.1]
+              bg-white/[0.04] border border-white/[0.08]
+              text-white/50 hover:text-white/50 hover:bg-white/[0.04] hover:border-white/[0.08]
               transition-all duration-200
             "
           >
@@ -96,7 +96,7 @@ const SymptomInput: React.FC = () => {
 
       {/* Status */}
       <div className="mt-auto pt-3">
-        <p className="text-[10px] text-white/20 text-center">
+        <p className="text-[10px] text-white/50 text-center">
           AI-powered analysis • Instant results
         </p>
       </div>

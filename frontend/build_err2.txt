@@ -1,0 +1,5 @@
+﻿
+> modern-login-3d@0.0.0 build
+> tsc && vite build
+
+src/components/FutureHealthPrediction.tsx(3,22): error TS6133: 'AlertTriangle' is declared but its value is never read.

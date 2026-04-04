@@ -39,14 +39,14 @@ const MedicineRemediesPanel: React.FC = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3"
+                className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3"
               >
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-2 h-2 rounded-full" style={{ background: med.color }} />
-                  <span className="text-xs font-semibold text-white/70">{med.name}</span>
+                  <span className="text-xs font-semibold text-white/50">{med.name}</span>
                 </div>
-                <p className="text-[10px] text-white/25 pl-4">{med.type}</p>
-                <p className="text-[10px] text-white/20 pl-4 italic mt-0.5">{med.note}</p>
+                <p className="text-[10px] text-white/50 pl-4">{med.type}</p>
+                <p className="text-[10px] text-white/50 pl-4 italic mt-0.5">{med.note}</p>
               </motion.div>
             ))}
           </div>
@@ -65,13 +65,13 @@ const MedicineRemediesPanel: React.FC = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 + i * 0.1 }}
-                className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3"
+                className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3"
               >
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-sm">{rem.icon}</span>
-                  <span className="text-xs font-semibold text-white/70">{rem.name}</span>
+                  <span className="text-xs font-semibold text-white/50">{rem.name}</span>
                 </div>
-                <p className="text-[10px] text-white/30 leading-relaxed pl-6">{rem.desc}</p>
+                <p className="text-[10px] text-white/50 leading-relaxed pl-6">{rem.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -79,7 +79,7 @@ const MedicineRemediesPanel: React.FC = () => {
       </div>
 
       {/* Disclaimer */}
-      <div className="mt-3 pt-3 border-t border-white/[0.04]">
+      <div className="mt-3 pt-3 border-t border-white/[0.08]">
         <div className="flex items-start gap-2 text-[10px] text-ll-red/50">
           <AlertTriangle size={12} className="flex-shrink-0 mt-0.5" />
           <span>AI suggestions are NOT medical advice. Always consult a healthcare professional.</span>
