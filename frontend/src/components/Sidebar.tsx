@@ -19,23 +19,23 @@ const Sidebar: React.FC = () => {
 
       {/* Nav items */}
       <div className="w-full px-4 space-y-2 mt-4 flex-1">
-        <a href="#" className="flex items-center gap-4 w-full bg-white/20 px-4 py-3 rounded-xl font-medium">
+        <a href="#" className="flex items-center gap-4 w-full bg-white/[0.04] px-4 py-3 rounded-xl font-medium">
           <LineChart size={20} />
           <span>Dashboard</span>
         </a>
-        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/10 transition-colors opacity-80 hover:opacity-100">
+        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/[0.04] transition-colors opacity-80 hover:opacity-100">
           <History size={20} />
           <span>History</span>
         </a>
-        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/10 transition-colors opacity-80 hover:opacity-100">
+        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/[0.04] transition-colors opacity-80 hover:opacity-100">
           <User size={20} />
           <span>Profile</span>
         </a>
-        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/10 transition-colors opacity-80 hover:opacity-100">
+        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/[0.04] transition-colors opacity-80 hover:opacity-100">
           <Watch size={20} />
           <span>Watch Connect</span>
         </a>
-        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/10 transition-colors opacity-80 hover:opacity-100">
+        <a href="#" className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium hover:bg-white/[0.04] transition-colors opacity-80 hover:opacity-100">
           <Pill size={20} />
           <span>Medication Reminders</span>
         </a>

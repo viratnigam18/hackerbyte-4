@@ -35,14 +35,14 @@ const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({ symptoms }) => {
         </motion.div>
         <div>
           <h2 className="text-base font-bold text-white">AI Analysis</h2>
-          <p className="text-[10px] text-white/30">Powered by LifeLine AI Engine</p>
+          <p className="text-[10px] text-white/50">Powered by LifeLine AI Engine</p>
         </div>
       </div>
 
       {/* User input echo */}
-      <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl px-3 py-2.5 mb-4">
-        <p className="text-[10px] text-white/25 font-semibold uppercase tracking-widest mb-1">Your symptoms</p>
-        <p className="text-sm text-white/60 italic">"{symptoms}"</p>
+      <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2.5 mb-4">
+        <p className="text-[10px] text-white/50 font-semibold uppercase tracking-widest mb-1">Your symptoms</p>
+        <p className="text-sm text-white/50 italic">"{symptoms}"</p>
       </div>
 
       {/* Analysis points */}
@@ -65,7 +65,7 @@ const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({ symptoms }) => {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-0.5">
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider">{point.label}</span>
+                <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">{point.label}</span>
                 <span
                   className="text-[8px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider"
                   style={{
@@ -84,9 +84,9 @@ const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({ symptoms }) => {
       </div>
 
       {/* Animated progress indicator */}
-      <div className="mt-4 pt-3 border-t border-white/[0.04]">
+      <div className="mt-4 pt-3 border-t border-white/[0.08]">
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[10px] text-white/25 font-semibold">Analysis Confidence</span>
+          <span className="text-[10px] text-white/50 font-semibold">Analysis Confidence</span>
           <span className="text-xs font-bold text-ll-cyan font-mono-data">87.4%</span>
         </div>
         <div className="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">

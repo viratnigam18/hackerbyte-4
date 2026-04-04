@@ -44,8 +44,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome Back!</h1>
-          <p className="text-gray-500 mb-8">Please enter log in details below</p>
+          <h1 className="text-4xl font-bold text-white/40 mb-2">Welcome Back!</h1>
+          <p className="text-white/40 mb-8">Please enter log in details below</p>
         </motion.div>
 
         {error && (
@@ -67,7 +67,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         >
           {/* Username Input */}
           <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700">Username</label>
+            <label className="text-sm font-medium text-white/40">Username</label>
             <input 
               type="text" 
               value={username}
@@ -79,7 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
           {/* Password Input */}
           <div className="space-y-1 relative">
-            <label className="text-sm font-medium text-gray-700">Password</label>
+            <label className="text-sm font-medium text-white/40">Password</label>
             <div className="relative">
               <input 
                 type={showPassword ? "text" : "password"} 
@@ -91,7 +91,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               <button 
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/40 transition-colors"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -115,7 +115,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           {/* Divider */}
           <div className="flex items-center gap-4 py-4">
             <div className="h-px bg-gray-200 flex-1"></div>
-            <span className="text-sm text-gray-400 font-medium">or continue with</span>
+            <span className="text-sm text-white/40 font-medium">or continue with</span>
             <div className="h-px bg-gray-200 flex-1"></div>
           </div>
 
@@ -124,7 +124,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             whileHover={{ scale: 1.02, backgroundColor: '#f9fafb' }}
             whileTap={{ scale: 0.98 }}
             type="button"
-            className="w-full py-3.5 bg-white text-gray-700 border border-gray-200 rounded-xl font-medium flex items-center justify-center gap-3 shadow-sm transition-all"
+            className="w-full py-3.5 bg-white text-white/40 border border-gray-200 rounded-xl font-medium flex items-center justify-center gap-3 shadow-sm transition-all"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -142,7 +142,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-center mt-8 text-sm text-gray-500"
+          className="text-center mt-8 text-sm text-white/40"
         >
           Don't have an account? <a href="#" className="font-semibold text-fintech-navy hover:underline">Sign Up</a>
         </motion.p>

@@ -5,12 +5,14 @@ import LandingScreen from './LandingScreen';
 import AnalysisDashboard from './AnalysisDashboard';
 import MentalHealthChat from './MentalHealthChat';
 import FloatingDock from './FloatingDock';
+import ProfileView from './ProfileView';
+import HistoryView from './HistoryView';
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
-type Screen = 'landing' | 'analysis' | 'mental-health';
+type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile';
 
 const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const [screen, setScreen] = useState<Screen>('landing');
@@ -29,6 +31,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const handleNavigate = (page: string) => {
     if (page === 'dashboard') setScreen('landing');
     else if (page === 'mental-health') setScreen('mental-health');
+    else if (page === 'history') setScreen('history');
+    else if (page === 'profile') setScreen('profile');
     else setScreen('landing');
   };
 
@@ -98,12 +102,38 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
               </div>
             </motion.div>
           )}
+
+          {screen === 'history' && (
+            <motion.div
+              key="history"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full overflow-y-auto pb-24"
+            >
+              <HistoryView />
+            </motion.div>
+          )}
+
+          {screen === 'profile' && (
+            <motion.div
+              key="profile"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full overflow-y-auto pb-24"
+            >
+              <ProfileView />
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
 
       {/* Floating Dock */}
       <FloatingDock
-        activePage={screen === 'landing' || screen === 'analysis' ? 'dashboard' : 'mental-health'}
+        activePage={screen === 'landing' || screen === 'analysis' ? 'dashboard' : screen}
         onNavigate={handleNavigate}
       />
     </div>

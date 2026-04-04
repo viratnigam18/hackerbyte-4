@@ -10,7 +10,7 @@ const HeartWidget: React.FC = () => {
     <GlassCard className="flex flex-col h-full relative overflow-hidden" noPadding delay={0.15}>
       {/* Label */}
       <div className="absolute top-4 left-5 z-20 flex items-center gap-2">
-        <span className="text-[10px] font-bold tracking-widest text-white/30 uppercase">3D Heart</span>
+        <span className="text-[10px] font-bold tracking-widest text-white/50 uppercase">3D Heart</span>
         <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
       </div>
 
@@ -55,7 +55,7 @@ const HeartWidget: React.FC = () => {
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/30 to-transparent z-20">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-[10px] text-white/30 font-medium">Real-time Model</p>
+            <p className="text-[10px] text-white/50 font-medium">Real-time Model</p>
             <p className="text-xs text-ll-teal font-semibold">Beating @ 74 BPM</p>
           </div>
           <div className="flex items-center gap-1 bg-red-400/10 px-2 py-1 rounded-full border border-red-400/15">

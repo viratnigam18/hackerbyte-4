@@ -144,7 +144,7 @@ const VitalsPanel: React.FC = () => {
   return (
     <GlassCard className="flex flex-col gap-3 h-full" delay={0.1}>
       <div className="flex items-center justify-between mb-1">
-        <h3 className="text-xs font-bold tracking-widest text-white/40 uppercase">Live Vitals</h3>
+        <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase">Live Vitals</h3>
         <span className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-ll-emerald animate-pulse" />
           <span className="text-[10px] text-ll-emerald font-medium">LIVE</span>
@@ -154,7 +154,7 @@ const VitalsPanel: React.FC = () => {
       {vitals.map((vital, i) => {
         const Wave = WaveComponents[vital.waveType];
         return (
-          <div key={vital.label} className="rounded-xl bg-white/[0.02] border border-white/[0.04] p-3">
+          <div key={vital.label} className="rounded-xl bg-white/[0.04] border border-white/[0.08] p-3">
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
                 <div
@@ -163,7 +163,7 @@ const VitalsPanel: React.FC = () => {
                 >
                   {vital.icon}
                 </div>
-                <span className="text-[10px] font-bold tracking-wider text-white/40">{vital.label}</span>
+                <span className="text-[10px] font-bold tracking-wider text-white/50">{vital.label}</span>
               </div>
               <span
                 className="text-[10px] font-bold px-2 py-0.5 rounded-full"
@@ -173,10 +173,10 @@ const VitalsPanel: React.FC = () => {
               </span>
             </div>
             <div className="flex items-end gap-2 mb-1">
-              <span className="font-mono text-2xl font-bold text-white/90" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+              <span className="font-mono text-2xl font-bold text-white/50" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
                 {values[i]}
               </span>
-              {vital.unit && <span className="text-xs text-white/30 pb-1">{vital.unit}</span>}
+              {vital.unit && <span className="text-xs text-white/50 pb-1">{vital.unit}</span>}
             </div>
             <Wave color={vital.color} />
           </div>
