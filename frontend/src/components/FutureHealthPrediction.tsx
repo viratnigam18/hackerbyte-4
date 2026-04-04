@@ -71,11 +71,7 @@ const FutureHealthPrediction: React.FC<FutureHealthPredictionProps> = ({ analysi
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 + i * 0.12 }}
-<<<<<<< HEAD
             className={`bg-white/[0.02] border border-white/[0.04] rounded-xl p-3 ${!analysis && 'opacity-40'}`}
-=======
-            className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3"
->>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs text-white/50 font-medium">{pred.label}</span>

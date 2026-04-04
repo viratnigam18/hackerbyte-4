@@ -52,7 +52,6 @@ const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({ symptoms, loading, er
                <div className="w-5 h-5 border-2 border-ll-cyan/30 border-t-ll-cyan rounded-full animate-spin" />
                <p className="text-xs text-white/40">Analyzing symptoms...</p>
             </div>
-<<<<<<< HEAD
         ) : error ? (
              <div className="flex items-center gap-2 text-red-400 p-3 bg-red-400/10 rounded-xl border border-red-400/20">
                 <AlertTriangle size={16} />
@@ -90,33 +89,6 @@ const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({ symptoms, loading, er
                 className="h-full rounded-full bg-gradient-to-r from-ll-cyan to-emerald-400"
             />
             </div>
-=======
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">{point.label}</span>
-                <span
-                  className="text-[8px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider"
-                  style={{
-                    background: `${severityColors[point.severity]}15`,
-                    color: severityColors[point.severity],
-                    border: `1px solid ${severityColors[point.severity]}25`,
-                  }}
-                >
-                  {point.severity}
-                </span>
-              </div>
-              <p className="text-xs text-white/50 leading-relaxed">{point.text}</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Animated progress indicator */}
-      <div className="mt-4 pt-3 border-t border-white/[0.08]">
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[10px] text-white/50 font-semibold">Analysis Confidence</span>
-          <span className="text-xs font-bold text-ll-cyan font-mono-data">87.4%</span>
->>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
         </div>
       )}
     </GlassCard>

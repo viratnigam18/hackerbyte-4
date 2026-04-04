@@ -1,15 +1,11 @@
-<<<<<<< HEAD
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Navigation2, Filter, Star, DollarSign, Clock } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-=======
-import React from 'react';
-import { Navigation2, Filter } from 'lucide-react';
->>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
 import GlassCard from './GlassCard';
 
-// Custom icons using SVG
+// Custom icons using SVG since default images might not load smoothly
 const createCustomIcon = (color: string) => {
   return L.divIcon({
     className: 'custom-leaflet-icon',
@@ -22,6 +18,8 @@ const createCustomIcon = (color: string) => {
   });
 };
 
+
+// Hardcoded location (Delhi approx)
 const USER_LOCATION: [number, number] = [28.5450, 77.1950];
 
 const hospitalsData = [
@@ -32,118 +30,70 @@ const hospitalsData = [
 ];
 
 const MapSection: React.FC = () => {
-<<<<<<< HEAD
   const [filter, setFilter] = useState('All');
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-  const markerGroupRef = useRef<L.LayerGroup | null>(null);
 
-  // Initialize Map only once
-  useEffect(() => {
-    if (!mapContainerRef.current || mapInstanceRef.current) return;
-
-    // Create map instance
-    const map = L.map(mapContainerRef.current, {
-      center: USER_LOCATION,
-      zoom: 13,
-      zoomControl: false,
-      attributionControl: false
-    });
-
-    // Add dark Tile Layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
-
-    // Add User specific markers
-    L.circle(USER_LOCATION, { 
-      radius: 2000, color: '#00f5d4', fillColor: '#00f5d4', fillOpacity: 0.1, weight: 1 
-    }).addTo(map);
-
-    L.marker(USER_LOCATION, {
-      icon: L.divIcon({
-        className: 'user-pulse',
-        html: `<div class="w-4 h-4 rounded-full bg-ll-cyan relative"><div class="absolute inset-0 rounded-full bg-ll-cyan animate-ping-slow"></div></div>`,
-        iconSize: [16, 16]
-      })
-    })
-    .bindPopup(`<span class="text-xs font-bold font-sans text-gray-800">Your Location</span>`, { className: 'custom-popup' })
-    .addTo(map);
-
-    mapInstanceRef.current = map;
-    markerGroupRef.current = L.layerGroup().addTo(map);
-
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-    };
-  }, []);
-
-  // Sync Markers every time filter changes
-  useEffect(() => {
-    if (!mapInstanceRef.current || !markerGroupRef.current) return;
-
-    // Clear existing markers
-    markerGroupRef.current.clearLayers();
-
-    const filteredHospitals = filter === 'All' 
-      ? hospitalsData 
-      : hospitalsData.filter(h => h.category === filter);
-
-    filteredHospitals.forEach(h => {
-      L.marker([h.lat, h.lng], { icon: createCustomIcon(h.color) })
-        .bindPopup(`
-          <div class="p-1 min-w-[120px]">
-            <div class="flex items-center gap-1.5 mb-1">
-              <span class="w-2 h-2 rounded-full" style="background: ${h.color}"></span>
-              <strong class="text-sm text-gray-900 leading-tight">${h.name}</strong>
-            </div>
-            <p class="text-xs text-gray-600 mb-2">${h.specialty}</p>
-            <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-800 border border-gray-200">
-              ${h.category}: ${h.stat}
-            </span>
-          </div>
-        `, { className: 'custom-popup' })
-        .addTo(markerGroupRef.current!);
-    });
-  }, [filter]);
+  const filteredHospitals = filter === 'All' 
+    ? hospitalsData 
+    : hospitalsData.filter(h => h.category === filter);
 
   return (
-    <GlassCard className="h-full flex flex-col relative overflow-hidden p-0" delay={0.45}>
+    <GlassCard className="h-full flex flex-col relative overflow-hidden p-0 min-h-[350px]" delay={0.45}>
       {/* Interactive Map Area */}
-      <div className="flex-1 relative rounded-t-xl overflow-hidden z-10 w-full h-full">
-        <div ref={mapContainerRef} style={{ width: '100%', height: '100%', background: 'transparent' }} />
+      <div className="flex-1 relative rounded-t-xl overflow-hidden" style={{ minHeight: '260px', zIndex: 1 }}>
+        <MapContainer 
+          center={USER_LOCATION} 
+          zoom={13} 
+          style={{ height: '100%', width: '100%' }} 
+          zoomControl={false}
+          attributionControl={false}
+        >
+          {/* Dark map tiles suitable for the dashboard's design */}
+          <TileLayer
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          />
+
+          {/* User Location Area */}
+          <Circle 
+            center={USER_LOCATION} 
+            radius={2000} 
+            pathOptions={{ color: '#00f5d4', fillColor: '#00f5d4', fillOpacity: 0.1, weight: 1 }} 
+          />
+          <Marker 
+            position={USER_LOCATION} 
+            icon={L.divIcon({
+              className: 'user-pulse',
+              html: `<div class="w-4 h-4 rounded-full bg-ll-cyan relative"><div class="absolute inset-0 rounded-full bg-ll-cyan animate-ping-slow"></div></div>`,
+              iconSize: [16, 16]
+            })}
+          >
+            <Popup className="custom-popup">
+              <span className="text-xs font-bold font-sans text-gray-800">Your Location</span>
+            </Popup>
+          </Marker>
+
+          {/* Hospital Markers */}
+          {filteredHospitals.map(h => (
+            <Marker key={h.name} position={[h.lat, h.lng]} icon={createCustomIcon(h.color)}>
+              <Popup className="custom-popup">
+                <div className="p-1 min-w-[120px]">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="w-2 h-2 rounded-full" style={{ background: h.color }}></span>
+                    <strong className="text-sm text-gray-900 leading-tight">{h.name}</strong>
+                  </div>
+                  <p className="text-xs text-gray-600 mb-2">{h.specialty}</p>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-800 border border-gray-200">
+                    {h.category}: {h.stat}
+                  </span>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
 
         {/* Floating Label */}
         <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 z-[400] pointer-events-none">
           <Navigation2 size={12} className="text-ll-cyan" />
           <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">Live Map</span>
-=======
-  return (
-    <GlassCard className="h-full flex flex-col relative overflow-hidden" noPadding delay={0.45}>
-      {/* Map area */}
-      <div className="flex-1 relative bg-[#071a10]">
-        <iframe
-          src="https://maps.google.com/maps?q=iiitdm%20jabalpur&t=&z=14&ie=UTF8&iwloc=&output=embed"
-          width="100%"
-          height="100%"
-          style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) opacity(0.8)' }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="IIITDM Jabalpur Map"
-        />
-
-        {/* Overlay to keep the styling dark and green-themed */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(7,26,16,0.6) 100%)'
-        }} />
-
-        {/* Label */}
-        <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 pointer-events-none">
-          <Navigation2 size={12} className="text-ll-cyan" />
-          <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">IIITDM Jabalpur Area</span>
->>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
         </div>
       </div>
 

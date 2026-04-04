@@ -134,12 +134,8 @@ const ChatInputBar: React.FC<ChatInputBarProps> = ({ onSubmit, isLoading = false
               w-9 h-9 rounded-xl
               bg-white/5 border border-white/10
               flex items-center justify-center
-<<<<<<< HEAD
               text-white/30 hover:text-ll-purple hover:border-ll-purple/20 hover:bg-ll-purple/[0.05]
               disabled:opacity-50 disabled:cursor-not-allowed
-=======
-              text-white/40 hover:text-ll-purple hover:border-ll-purple/20 hover:bg-ll-purple/[0.05]
->>>>>>> 6e15386c39d339ff64739579b0856606a6a6ad90
               transition-all duration-200
             "
             title="Upload medical report"
