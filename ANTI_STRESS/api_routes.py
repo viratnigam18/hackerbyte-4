@@ -15,10 +15,10 @@ stress_router = APIRouter(prefix="/stress", tags=["Anti-Stress Gamification"])
 init_db()
 
 
-@stress_router.get("/actions/{user_id}", response_model=List[StressAction])
-def get_actions(user_id: str, severity: str = "MEDIUM"):
+@stress_router.get("/actions", response_model=List[StressAction])
+def get_actions(user_id: str, stress_level: str = "MEDIUM"):
     """Returns 2 recommended stress-relief actions based on severity."""
-    actions = get_recommended_actions(severity, user_id)
+    actions = get_recommended_actions(stress_level, user_id)
     return actions
 
 
@@ -31,7 +31,7 @@ def mark_complete(payload: CompleteActionRequest):
     raise HTTPException(status_code=404, detail="Action not found or could not be completed.")
 
 
-@stress_router.get("/stats/{user_id}", response_model=UserStatsResponse)
+@stress_router.get("/stats", response_model=UserStatsResponse)
 def get_stats(user_id: str):
     """Returns total points, current streak, and last completed date."""
     stats = get_user_stats_db(user_id)
