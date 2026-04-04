@@ -7,12 +7,13 @@ import MentalHealthChat from './MentalHealthChat';
 import FloatingDock from './FloatingDock';
 import ProfileView from './ProfileView';
 import HistoryView from './HistoryView';
+import VitalsPanel from './VitalsPanel';
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
-type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile';
+type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile' | 'watch';
 
 const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const [screen, setScreen] = useState<Screen>('landing');
@@ -33,6 +34,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
     else if (page === 'mental-health') setScreen('mental-health');
     else if (page === 'history') setScreen('history');
     else if (page === 'profile') setScreen('profile');
+    else if (page === 'watch') setScreen('watch');
     else setScreen('landing');
   };
 
@@ -99,6 +101,34 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
               </div>
               <div className="flex-1 overflow-hidden">
                 <MentalHealthChat onBack={() => setScreen('landing')} />
+              </div>
+            </motion.div>
+          )}
+
+          {screen === 'watch' && (
+            <motion.div
+              key="watch"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 40 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full flex flex-col"
+            >
+              <div className="px-6 py-3 border-b border-white/[0.06] bg-[rgba(8,32,20,0.6)] backdrop-blur-xl">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setScreen('landing')}
+                    className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-white/30 hover:text-ll-cyan transition-colors"
+                  >
+                    ←
+                  </button>
+                  <span className="text-sm font-bold text-white">Smartwatch Connection Center</span>
+                </div>
+              </div>
+              <div className="flex-1 overflow-auto p-4 md:p-12 flex justify-center items-center pt-8 pb-32">
+                  <div className="w-full max-w-5xl min-h-[400px]">
+                      <VitalsPanel />
+                  </div>
               </div>
             </motion.div>
           )}
