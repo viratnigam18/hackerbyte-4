@@ -7,11 +7,7 @@ import CustomCursor from './components/CustomCursor';
 import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
-<<<<<<< HEAD
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-=======
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
->>>>>>> 64128fb511225acd17e8c049174fdcc62c6d2164
   const [showLanding, setShowLanding] = useState(true);
 
   if (isAuthenticated) {

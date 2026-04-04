@@ -9,10 +9,7 @@ import AntiStressGame from './AntiStressGame';
 import ProfileView from './ProfileView';
 import HistoryView from './HistoryView';
 import VitalsPanel from './VitalsPanel';
-<<<<<<< HEAD
 import SOSButton from './SOSButton';
-=======
->>>>>>> 64128fb511225acd17e8c049174fdcc62c6d2164
 
 interface DashboardProps {
   onLogout: () => void;

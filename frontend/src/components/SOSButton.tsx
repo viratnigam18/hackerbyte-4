@@ -42,16 +42,11 @@ const SOSButton: React.FC<SOSButtonProps> = ({ symptoms }) => {
     }
 
     const payload = {
-      event: "EMERGENCY_SOS_TRIGGERED",
-      patient: {
-        name: profileData.name,
-        age: profileData.age,
-        bloodGroup: profileData.bloodGroup,
-        medicalHistory: profileData.previousDiseases
-      },
-      current_symptoms: symptoms || "No symptoms recorded yet",
+      current_data: symptoms || "No symptoms recorded yet",
+      previous_data: profileData.previousDiseases || [],
       location: currentLoc || "Location not available",
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      patient_name: profileData.name
     };
 
     try {
