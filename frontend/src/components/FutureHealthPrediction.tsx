@@ -20,29 +20,47 @@ const riskColors = {
 
 interface FutureHealthPredictionProps {
   analysis: AnalysisData | null;
+  symptoms: string;
 }
 
-const FutureHealthPrediction: React.FC<FutureHealthPredictionProps> = ({ analysis }) => {
-  // Generate dynamic predictions based on the fetched model confidence
+const getSeverityScore = (symptoms: string) => {
+  const s = symptoms.toLowerCase();
+  if (s.includes('chest pain') || s.includes('heart') || s.includes('breath') || s.includes('stroke')) return 35; // Critical
+  if (s.includes('fracture') || s.includes('pain') || s.includes('fever') || s.includes('trauma')) return 55; // At Risk
+  if (s.includes('cough') || s.includes('headache') || s.includes('nausea') || s.includes('dizz')) return 75; // Moderate
+  return 92; // Good/Minor
+};
+
+const FutureHealthPrediction: React.FC<FutureHealthPredictionProps> = ({ analysis, symptoms }) => {
+  const healthScore = analysis ? getSeverityScore(symptoms) : 100;
+  const severity = 100 - healthScore; // 100 - 35 = 65 (high severity)
+  
+  // Blend with AI confidence to make numbers dynamic
+  const aiFactor = analysis ? (analysis.confidence / 10) : 0; 
+  
+  const immRisk = Math.min(95, severity + aiFactor);
+  const secRisk = Math.min(85, severity * 0.7 + aiFactor);
+  const recRate = Math.min(95, healthScore + (analysis ? analysis.confidence / 5 : 0));
+
   const predictions: PredictionItem[] = analysis ? [
     { 
       label: 'Immediate Risk', 
-      risk: `${Math.round(analysis.confidence)}%`, 
-      riskLevel: analysis.confidence > 70 ? 'high' : analysis.confidence > 40 ? 'medium' : 'low', 
-      trend: analysis.confidence > 50 ? 'up' : 'down', 
+      risk: `${Math.round(immRisk)}%`, 
+      riskLevel: immRisk > 70 ? 'high' : immRisk > 40 ? 'medium' : 'low', 
+      trend: immRisk > 50 ? 'up' : 'down', 
       timeframe: '24h' 
     },
     { 
       label: 'Secondary Complications', 
-      risk: `${Math.round(analysis.confidence * 0.6)}%`, 
-      riskLevel: analysis.confidence * 0.6 > 50 ? 'high' : analysis.confidence * 0.6 > 30 ? 'medium' : 'low', 
+      risk: `${Math.round(secRisk)}%`, 
+      riskLevel: secRisk > 50 ? 'high' : secRisk > 30 ? 'medium' : 'low', 
       trend: 'up', 
       timeframe: '48h' 
     },
     { 
       label: 'Recovery Rate', 
-      risk: `${Math.round(100 - (analysis.confidence * 0.5))}%`, 
-      riskLevel: 'low', 
+      risk: `${Math.round(recRate)}%`, 
+      riskLevel: recRate < 50 ? 'high' : recRate < 75 ? 'medium' : 'low', 
       trend: 'down', 
       timeframe: '7d' 
     },

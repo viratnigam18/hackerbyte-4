@@ -182,10 +182,10 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ symptoms, onBack 
             {/* CENTER: Future Prediction (top) + Health Score (bottom) — 4 cols */}
             <div className="col-span-12 md:col-span-4 flex flex-col gap-4">
               <div className="flex-1">
-                <FutureHealthPrediction analysis={analysis} />
+                <FutureHealthPrediction analysis={analysis} symptoms={symptoms} />
               </div>
               <div className="flex-1">
-                <HealthScoreCard analysis={analysis} />
+                <HealthScoreCard analysis={analysis} symptoms={symptoms} />
               </div>
             </div>
 

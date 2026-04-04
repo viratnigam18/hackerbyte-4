@@ -6,11 +6,19 @@ import { AnalysisData } from './AnalysisDashboard';
 
 interface HealthScoreCardProps {
   analysis: AnalysisData | null;
+  symptoms: string;
 }
 
-const HealthScoreCard: React.FC<HealthScoreCardProps> = ({ analysis }) => {
-  // If high confidence in a disease, health score is lower.
-  const targetScore = analysis ? Math.round(100 - (analysis.confidence * 0.7)) : 0;
+const getSeverityScore = (symptoms: string) => {
+  const s = symptoms.toLowerCase();
+  if (s.includes('chest pain') || s.includes('heart') || s.includes('breath') || s.includes('stroke')) return 35; // Critical
+  if (s.includes('fracture') || s.includes('pain') || s.includes('fever') || s.includes('trauma')) return 55; // At Risk
+  if (s.includes('cough') || s.includes('headache') || s.includes('nausea') || s.includes('dizz')) return 75; // Moderate
+  return 92; // Good/Minor
+};
+
+const HealthScoreCard: React.FC<HealthScoreCardProps> = ({ analysis, symptoms }) => {
+  const targetScore = analysis ? getSeverityScore(symptoms) : 0;
   const score = Math.max(15, Math.min(100, targetScore)); // Clamp between 15-100
   const maxScore = 100;
   const circumference = 2 * Math.PI * 45;

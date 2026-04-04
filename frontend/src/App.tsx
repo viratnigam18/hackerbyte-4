@@ -13,7 +13,7 @@ const App: React.FC = () => {
   if (isAuthenticated) {
     return (
       <>
-        <CustomCursor />
+        <CustomCursor variant="dashboard" />
         <Dashboard onLogout={() => setIsAuthenticated(false)} />
       </>
     );
