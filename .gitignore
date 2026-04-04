@@ -25,3 +25,12 @@ node_modules/
 dist/
 .env
 
+<<<<<<< HEAD
+mental_model/models/
+__pycache__/
+*.pyc
+.env
+node_modules
+
+=======
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91

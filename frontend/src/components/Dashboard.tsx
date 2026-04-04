@@ -5,15 +5,30 @@ import LandingScreen from './LandingScreen';
 import AnalysisDashboard from './AnalysisDashboard';
 import MentalHealthChat from './MentalHealthChat';
 import FloatingDock from './FloatingDock';
+<<<<<<< HEAD
+import AntiStressGame from './AntiStressGame';
+=======
 import ProfileView from './ProfileView';
 import HistoryView from './HistoryView';
+<<<<<<< HEAD
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
+=======
 import VitalsPanel from './VitalsPanel';
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+type Screen = 'landing' | 'analysis' | 'mental-health' | 'anti-stress';
+=======
+type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile';
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
+=======
 type Screen = 'landing' | 'analysis' | 'mental-health' | 'history' | 'profile' | 'watch';
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
 
 const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const [screen, setScreen] = useState<Screen>('landing');
@@ -32,9 +47,16 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
   const handleNavigate = (page: string) => {
     if (page === 'dashboard') setScreen('landing');
     else if (page === 'mental-health') setScreen('mental-health');
+<<<<<<< HEAD
+    else if (page === 'anti-stress') setScreen('anti-stress');
+=======
     else if (page === 'history') setScreen('history');
     else if (page === 'profile') setScreen('profile');
+<<<<<<< HEAD
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
+=======
     else if (page === 'watch') setScreen('watch');
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
     else setScreen('landing');
   };
 
@@ -105,6 +127,20 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
             </motion.div>
           )}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+          {screen === 'anti-stress' && (
+            <motion.div
+              key="anti-stress"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full"
+            >
+              <AntiStressGame onBack={() => setScreen('landing')} />
+=======
+=======
           {screen === 'watch' && (
             <motion.div
               key="watch"
@@ -133,6 +169,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
             </motion.div>
           )}
 
+>>>>>>> d309a7f8e52dec45c64f4f51b126df0677debb91
           {screen === 'history' && (
             <motion.div
               key="history"
@@ -156,6 +193,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout: _onLogout }) => {
               className="h-full overflow-y-auto pb-24"
             >
               <ProfileView />
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
             </motion.div>
           )}
         </AnimatePresence>

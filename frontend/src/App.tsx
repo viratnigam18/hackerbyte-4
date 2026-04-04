@@ -7,8 +7,19 @@ import CustomCursor from './components/CustomCursor';
 import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
+<<<<<<< HEAD
+<<<<<<< HEAD
+  const [isAuthenticated, setIsAuthenticated] = React.useState(true);
+
+  if (isAuthenticated) {
+    return <Dashboard onLogout={() => setIsAuthenticated(false)} />;
+  }
+=======
+=======
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+>>>>>>> fdadfab5adaa13db66c5f12c19e52e0bb83eef84
   const [showLanding, setShowLanding] = useState(true);
+>>>>>>> 723cdab1dfc53278cee84a998e1209e43c93c6f2
 
   if (isAuthenticated) {
     return (
